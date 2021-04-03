@@ -13,6 +13,7 @@ app.on('ready', () => {
       webSecurity: false,
       worldSafeExecuteJavaScript: true,
     },
+    frame: false
   });
 
   if (process.env.NODE_ENV === 'development') {

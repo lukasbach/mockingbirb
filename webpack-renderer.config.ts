@@ -1,6 +1,7 @@
 import * as path from 'path';
 import * as webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 
 const config: webpack.Configuration = {
   resolve: {
@@ -17,6 +18,18 @@ const config: webpack.Configuration = {
         exclude: /node_modules/,
         use: 'ts-loader',
       },
+      {
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: ['file-loader'],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        use: ['file-loader'],
+      }
     ],
   },
   devServer: {
@@ -37,7 +50,13 @@ const config: webpack.Configuration = {
       filename: './index.html',
       template: './index.html',
     }),
+    new MonacoWebpackPlugin({
+      languages: ['json', 'javascript', 'typescript']
+    }),
   ],
+  externals: {
+    'express': 'commonjs2 express',
+  }
 };
 
 export default config;

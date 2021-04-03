@@ -4,6 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ReTypeTron App</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+      html,
+      body,
+      #root {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      #root, .react-tiny-popover-container {
+        font-family: 'Maven Pro', sans-serif;
+        color: white;
+        font-size: 16px;
+        box-sizing: border-box;
+      }
+
+      button {
+        color: inherit;
+        background-color: inherit;
+        font-size: inherit;
+        font-family: inherit;
+        border: inherit;
+        outline: none;
+      }
+
+      button:focus {
+        outline: none;
+      }
+
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
+
+      .react-tiny-popover-container {
+        z-index: 600;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
