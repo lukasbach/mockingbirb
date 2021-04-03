@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SearchSelect } from '../ui/form/SearchSelect';
-import { DocumentContentTypeMapper } from '../../mock/DocumentContentTypeMapper';
+import { DocumentContentTypeMapper } from '../../data/DocumentContentTypeMapper';
 
 export const MimeSelect: React.FC<{
   value: string;

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { MockedHandlerDocumentRepeater, MockedHandlerLogic } from '../../mock/types';
-import { useApp } from '../../mock/AppProvider';
+import { MockedHandlerDocumentRepeater, MockedHandlerLogic } from '../../data/types';
+import { useApp } from '../../data/AppProvider';
 import { SearchSelect } from '../ui/form/SearchSelect';
 import { CodeEditor } from '../ui/CodeEditor';
 import { Padded } from '../ui/Padded';

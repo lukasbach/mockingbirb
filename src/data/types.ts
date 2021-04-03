@@ -5,6 +5,7 @@ type TypedObject<K extends string, V> = { [key in K]: V };
 
 export interface MockedServerConfiguration {
   id: string;
+  location: string;
   name: string;
   port: number;
   env: object;

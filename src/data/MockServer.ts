@@ -18,6 +18,7 @@ export const defaultMockServerState: MockedServerConfiguration = {
   name: 'New Mock',
   port: 5080,
   isRunning: false,
+  location: 'C:\\test',
   handlers: {
     defaultHandler: {
       id: 'defaultHandler',

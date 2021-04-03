@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Card } from '../ui/Card';
 import { InputGroup } from '../ui/form/InputGroup';
 import { TextInput } from '../ui/form/TextInput';
-import { useApp } from '../../mock/AppProvider';
+import { useApp } from '../../data/AppProvider';
 import { Box } from '../ui/Box';
 import { Button } from '../ui/Button';
 import { useState } from 'react';

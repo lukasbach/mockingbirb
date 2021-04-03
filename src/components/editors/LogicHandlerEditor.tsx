@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { MockedHandlerDocumentRepeater, MockedHandlerLogic } from '../../mock/types';
+import { MockedHandlerDocumentRepeater, MockedHandlerLogic } from '../../data/types';
 import { CodeEditor } from '../ui/CodeEditor';
-import { useApp } from '../../mock/AppProvider';
+import { useApp } from '../../data/AppProvider';
 
 export const LogicHandlerEditor: React.FC<{
   handlerId: string

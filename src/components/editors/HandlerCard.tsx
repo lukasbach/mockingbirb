@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useApp } from '../../mock/AppProvider';
+import { useApp } from '../../data/AppProvider';
 import { Card } from '../ui/Card';
 import { Heading } from '../ui/Heading';
 import { Padded } from '../ui/Padded';
