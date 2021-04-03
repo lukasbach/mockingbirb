@@ -8,11 +8,15 @@ import {
 } from './types';
 import * as uuid from 'uuid';
 import express, { Express } from 'express';
+import { RoutesManager } from './RoutesManager';
+import { DocumentManager } from './DocumentManager';
+import { RequestHandler } from './RequestHandler';
+import { CodeVm } from './CodeVm';
 
 export const defaultMockServerState: MockedServerConfiguration = {
   id: uuid.v4(),
   name: 'New Mock',
-  port: 5050,
+  port: 5080,
   isRunning: false,
   handlers: {
     defaultHandler: {
@@ -20,25 +24,28 @@ export const defaultMockServerState: MockedServerConfiguration = {
       name: 'Default Handler',
       type: 'repeater',
       documentId: 'defaultDocument',
-      status: 200
+      status: 200,
+      // if: 'result = params.id === "test";'
     } as MockedHandlerDocumentRepeater
   },
   documents: {
     defaultDocument: {
       id: 'defaultDocument',
       name: 'Default Document',
-      content: 'Hello!'
+      content: 'Hello!',
+      contentType: 'application/json',
     },
     defaultDocument2: {
       id: 'defaultDocument2',
       name: 'Default Document 2',
-      content: 'Hello!'
+      content: 'Hello!',
+      contentType: 'application/xml',
     },
   },
   routes: [
     {
       id: "route1",
-      route: '/hello/*',
+      route: '/hello/:id/:code/*',
       handlers: ['defaultHandler'],
       method: 'POST'
     },
@@ -55,12 +62,20 @@ export const defaultMockServerState: MockedServerConfiguration = {
 
 export class MockServer {
   private server?: Express;
+  private requestHandler: RequestHandler;
+  private readonly vm: CodeVm;
+  public routes: RoutesManager;
+  public documents: DocumentManager;
 
   constructor(
     private state: MockedServerConfiguration,
     private onChange: (state: MockedServerConfiguration) => void,
   ) {
     this.state.isRunning = false;
+    this.vm = new CodeVm(state, this);
+    this.routes = new RoutesManager(state, this);
+    this.documents = new DocumentManager(state, this);
+    this.requestHandler = new RequestHandler(state, this, this.vm);
   }
 
   public static createEmpty(onChange: (state: MockedServerConfiguration) => void) {
@@ -68,6 +83,7 @@ export class MockServer {
   }
 
   public start() {
+    console.log("Starting server")
     if (this.server) {
       // TODO close server
     }
@@ -75,50 +91,29 @@ export class MockServer {
     this.server = express();
 
     this.server.all('*', (req, res, next) => {
-
+      try {
+        this.requestHandler.handle(req, res);
+      } catch(e) {
+        res.status(500).json({
+          error: true,
+          message: e.message,
+          object: JSON.stringify(e),
+          cause: 'mockingbirb',
+        });
+      }
     });
 
-    this.server.listen(this.state.port, () => {
+    const httpServer = this.server.listen(this.state.port, () => {
       this.state.isRunning = true;
       this.scheduleUpdate();
     });
+
+    window.addEventListener("beforeunload", () => {
+      console.log("Closing server");
+      httpServer.close();
+    })
   }
 
-  public createRoute(routeConfig: Omit<MockedRouteConfiguration, 'id'>) {
-    const id = uuid.v4();
-    this.state.routes.push({...routeConfig, id});
-    this.scheduleUpdate();
-    return id;
-  }
-  public updateRoute(id: string, routeConfig: Partial<MockedRouteConfiguration>) {
-    this.state.routes = this.state.routes.map(r => r.id === id ? {...r, ...routeConfig} : r);
-    this.scheduleUpdate();
-  }
-  public deleteRoute(id: string) {
-    this.state.routes = this.state.routes.splice(this.state.routes.findIndex(r => r.id === id), 1);
-    this.scheduleUpdate();
-  }
-  public getRoute(id: string) {
-    return this.state.routes.find(r => r.id === id)!;
-  }
-
-  public createDocument(document: Omit<MockDocument, 'id'>) {
-    const id = uuid.v4();
-    this.state.documents[id] = {...document, id};
-    this.scheduleUpdate();
-    return id;
-  }
-  public updateDocument(id: string, document: Partial<MockDocument>) {
-    if (document.id && id !== document.id) {
-      delete this.state.documents[id];
-    }
-    this.state.documents[document.id ?? id] = {...this.state.documents[id], ...document};
-    this.scheduleUpdate();
-  }
-  public deleteDocument(id: string) {
-    delete this.state.documents[id];
-    this.scheduleUpdate();
-  }
 
   public createHandler(handler: Omit<MockedHandler, 'id'>) {
     const id = uuid.v4();
@@ -139,7 +134,7 @@ export class MockServer {
   }
   public initializeNewHandlerFor(routeId: string, handlerType: string) {
     let handlerId;
-    const routeConfig = this.getRoute(routeId);
+    const routeConfig = this.routes.getRoute(routeId);
 
     switch (handlerType) {
       case 'repeater':
@@ -169,7 +164,7 @@ export class MockServer {
         throw Error(`Unknown handler type ${handlerType}`);
     }
 
-    this.updateRoute(routeId, {
+    this.routes.updateRoute(routeId, {
       handlers: [...routeConfig.handlers, handlerId]
     });
   }
@@ -183,7 +178,7 @@ export class MockServer {
     this.scheduleUpdate();
   }
 
-  private scheduleUpdate() {
+  public scheduleUpdate() {
     // TODO settimeout
     console.log(this.state)
     this.onChange({...this.state});

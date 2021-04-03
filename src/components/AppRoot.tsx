@@ -34,7 +34,7 @@ export const AppRoot: React.FC<{}> = props => {
 
           <MenuListItem
             onClick={() => {
-              const id = server.createRoute({ route: '/*', method: 'ALL', handlers: [] });
+              const id = server.routes.createRoute({ route: '/*', method: 'ALL', handlers: [] });
               setView(View.RouteConfig);
               setSelectedRoute(id);
             }}

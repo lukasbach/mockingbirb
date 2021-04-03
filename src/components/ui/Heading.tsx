@@ -11,6 +11,7 @@ export const Heading: React.FC<{
     <Box
       as={`h${props.level}` as 'h1'}
       color={props.level < 2 ? theme.colors.muted : theme.colors.text}
+      marginTop="28px"
       fontWeight="bolder"
       fontSize={(() => {
         switch (props.level) {

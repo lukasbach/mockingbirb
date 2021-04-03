@@ -54,7 +54,7 @@ export const RouteEditor: React.FC<{
                 placeholder="Placeholder"
                 value={routeConfig.route}
                 onChangeValue={(v) => {
-                  server.updateRoute(props.routeId, { route: v })
+                  server.routes.updateRoute(props.routeId, { route: v })
                 }}
               />
             </InputGroup>

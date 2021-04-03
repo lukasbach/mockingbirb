@@ -22,11 +22,12 @@ export const TextInput = React.forwardRef<
       ref={ref}
       elProps={{
         ...props,
+        onChangeValue: undefined,
         onChange: (e: any) => {
           props.onChangeValue?.(e.target.value, e);
           props.onChange?.(e);
         }
-      }}
+      } as any}
     />
   );
 });

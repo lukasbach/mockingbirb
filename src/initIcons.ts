@@ -5,9 +5,9 @@ import {
   faChevronDown,
   faChevronLeft,
   faChevronRight,
-  faChevronUp,
+  faChevronUp, faCode,
   faCoffee, faFileAlt, faPencilAlt,
-  faPlus,
+  faPlus, faTrash, faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(fab, faCoffee, faPlus, faChevronDown, faChevronUp, faChevronLeft, faChevronRight, faFileAlt, faPencilAlt)
+library.add(fab, faCoffee, faPlus, faChevronDown, faChevronUp, faChevronLeft, faChevronRight, faFileAlt, faPencilAlt, faCode, faTrash, faTrashAlt)

@@ -18,14 +18,20 @@ export const Button: React.FC<{
     <Box
       as="button"
       backgroundColor={props.primary ? theme.colors.primary : props.minimal ? undefined : theme.colors.minimalBackground}
-      borderRadius={props.embedded ? theme.radius : theme.radius} // TODO
+      borderRadius={props.embedded ? undefined : theme.radius} // TODO
       padding="12px 12px"
       margin={props.embedded ? undefined : '0 3px'}
+      cursor="pointer"
+      display="inline-flex"
+      flexDirection="row"
+      height={props.embedded ? '100%' : undefined}
       elProps={{
         'aria-label': props.ariaDescription,
+        ariaDescription: undefined,
+        minimal: undefined,
+        embedded: undefined,
         ...props,
       }}
-      cursor="pointer"
       hover={{
         boxShadow: `inset 0 0 0 3px ${props.primary ? theme.colors.text : theme.colors.primary}`,
       }}
@@ -35,7 +41,7 @@ export const Button: React.FC<{
       }}
     >
       {props.icon && (
-        <Box marginRight={props.children ? '4px' : undefined}>
+        <Box marginRight={props.children ? '6px' : undefined}>
           <FontAwesomeIcon icon={props.icon} />
         </Box>
       )}

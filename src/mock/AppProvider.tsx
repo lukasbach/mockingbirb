@@ -1,5 +1,5 @@
 import { defaultMockServerState, MockServer } from './MockServer';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { MockedRouteConfiguration, MockedServerConfiguration } from './types';
 import { defaultTheme } from '../components/ui/layout/ThemeProvider';
 
@@ -12,7 +12,7 @@ export interface AppState {
 }
 
 export const AppStateContext = React.createContext<AppState>({
-  server: MockServer.createEmpty(() => {}),
+  server: null as any,
   serverList: [],
   state: defaultMockServerState,
   getRoute: () => null as any,
@@ -25,6 +25,10 @@ export const AppProvider: React.FC = ({children}) => {
     default: MockServer.createEmpty(setState),
   });
   const server = servers.current.default;
+
+  useEffect(() => {
+    server.start();
+  }, []);
 
   return (
     <AppStateContext.Provider value={{

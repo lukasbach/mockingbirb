@@ -1,3 +1,6 @@
+import { Request, Response } from 'express-serve-static-core';
+import { CodeVm } from './CodeVm';
+
 type TypedObject<K extends string, V> = { [key in K]: V };
 
 export interface MockedServerConfiguration {
@@ -33,12 +36,14 @@ export interface MockDocument {
   id: string;
   name: string;
   content: string;
+  contentType: string;
 }
 
 export interface MockedHandler {
   id: string;
   name: string;
   public?: boolean;
+  always?: boolean;
   type: string;
   if?: string;
 }
@@ -62,4 +67,9 @@ export interface MockedHandlerSmartDocumentRepeater extends MockedHandler {
 export interface MockedHandlerLogic extends MockedHandler {
   type: 'logic';
   code: string;
+}
+
+export interface HandlerDispatcher<H extends MockedHandler> {
+  type: string;
+  handle: (handler: H, req: Request, res: Response, params: object) => Promise<void>;
 }
