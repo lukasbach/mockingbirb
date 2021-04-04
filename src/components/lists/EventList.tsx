@@ -10,6 +10,7 @@ import { Button } from '../ui/Button';
 import { useMemo, useState } from 'react';
 import { LabelText } from '../ui/form/LabelText';
 import ago from 's-ago';
+import { BottomBorderItem } from '../BottomBorderItem';
 
 export const EventList: React.FC<{
   filter?: {
@@ -44,7 +45,7 @@ export const EventList: React.FC<{
         return true;
       })
       .reverse();
-  }, [props.filter, state.events, search]);
+  }, [props.filter, state.events, state.events.length, search]);
 
   return (
     <Box>
@@ -60,8 +61,8 @@ export const EventList: React.FC<{
         {events.map((event, idx) => {
           const isLast = idx === Object.keys(events).length - 1;
           return (
-            <Box
-              borderBottom={!isLast ? `1px solid ${theme.colors.backgroundMenu}` : undefined}
+            <BottomBorderItem
+              hasBorder={!isLast}
               key={event.date}
             >
               <Button minimal={true} embedded={true} fill={true} borderRadius={isLast ? 'bl br' : undefined}>
@@ -95,7 +96,7 @@ export const EventList: React.FC<{
                   </Box>
                 </Box>
               </Button>
-            </Box>
+            </BottomBorderItem>
           );
         })}
 

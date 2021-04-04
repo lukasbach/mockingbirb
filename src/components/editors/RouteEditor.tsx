@@ -15,12 +15,18 @@ import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { Padded } from '../ui/Padded';
 import { HandlerCard } from './HandlerCard';
 import { EventList } from '../lists/EventList';
+import { BottomBorderItem } from '../BottomBorderItem';
 
 export const RouteEditor: React.FC<{
   routeId: string
 }> = props => {
   const { getRoute, server, state } = useApp();
   const routeConfig = getRoute(props.routeId);
+
+  if (!routeConfig) {
+    return null;
+  }
+
   console.log("Update ", routeConfig.route)
 
   return (
@@ -77,6 +83,28 @@ export const RouteEditor: React.FC<{
       {routeConfig.handlers.map(handlerId => (
         <HandlerCard handlerId={ handlerId } key={handlerId}/>
       ))}
+
+      <Heading level={1}>Actions</Heading>
+      <Card>
+        <BottomBorderItem hasBorder={false}>
+          <Box display="flex">
+            <Box flexGrow={1}>
+              <LabelText>
+                Delete this route
+              </LabelText>
+            </Box>
+            <Button
+              minimal={true}
+              embedded={true}
+              borderRadius="tr br"
+              icon="trash-alt"
+              onClick={() => server.routes.deleteRoute(props.routeId)}
+            >
+              Delete
+            </Button>
+          </Box>
+        </BottomBorderItem>
+      </Card>
 
       <Heading level={1}>Events</Heading>
       <p>The following events have been recorded which matched this route.</p>

@@ -29,7 +29,7 @@ export const MenuListItem: React.FC<{
       display="flex"
     >
       {props.icon && (
-        <Box marginRight="8px">
+        <Box margin="0 8px">
           <FontAwesomeIcon icon={props.icon} />
         </Box>
       )}

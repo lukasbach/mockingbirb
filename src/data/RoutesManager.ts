@@ -21,7 +21,7 @@ export class RoutesManager {
     this.server.scheduleUpdate();
   }
   public deleteRoute(id: string) {
-    this.state.routes = this.state.routes.splice(this.state.routes.findIndex(r => r.id === id), 1);
+    this.state.routes.splice(this.state.routes.findIndex(r => r.id === id), 1);
     this.server.scheduleUpdate();
   }
   public getRoute(id: string) {
