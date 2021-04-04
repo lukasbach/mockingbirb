@@ -56,6 +56,7 @@ const config: webpack.Configuration = {
   ],
   externals: {
     'express': 'commonjs2 express',
+    'body-parser': 'commonjs2 body-parser',
   }
 };
 

@@ -14,10 +14,23 @@ export const defaultTheme = {
     orange: 'rgb(219, 129, 55)',
     red: '#DB3737',
 
+    httpMethod: {
+      get: '#3498db',
+      post: '#27ae60',
+      put: '#d35400',
+      head: '#f1c40f',
+      patch: '#e67e22',
+      delete: '#e74c3c',
+      default: '#9b59b6',
+    },
+
     text: '#ffffff',
     muted: '#bebebe',
 
     minimalBackground: 'rgba(255, 255, 255, .07)',
+
+    scroll: 'rgba(255, 255, 255, .1)',
+    scrollHover: 'rgba(255, 255, 255, .2)'
   },
   radius: '8px',
   contentPadding: '14px 18px',

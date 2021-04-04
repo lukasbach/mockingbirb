@@ -1,4 +1,5 @@
 import { Request, Response } from 'express-serve-static-core';
+import { RequestData } from './RequestData';
 
 type TypedObject<K extends string, V> = { [key in K]: V };
 
@@ -26,12 +27,16 @@ export interface MockedRouteConfiguration {
 
 export interface RouteEvent {
   route: string;
+  handlers: string[];
   requestHeaders: object;
   requestBody: string;
+  requestMethod: string;
   responseHeaders: object;
   responseBody: string;
   responseStatus: number;
+  responseDocumentId?: string;
   date: number;
+  path: string;
 }
 
 export interface MockDocument {
@@ -73,5 +78,5 @@ export interface MockedHandlerLogic extends MockedHandler {
 
 export interface HandlerDispatcher<H extends MockedHandler> {
   type: string;
-  handle: (handler: H, req: Request, res: Response, params: object) => Promise<void>;
+  handle: (handler: H, request: RequestData, params: object) => Promise<void>;
 }

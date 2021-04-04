@@ -8,6 +8,7 @@ import {
 } from './types';
 import * as uuid from 'uuid';
 import express, { Express } from 'express';
+import bodyParser from 'body-parser';
 import { RoutesManager } from './RoutesManager';
 import { DocumentManager } from './DocumentManager';
 import { RequestHandler } from './RequestHandler';
@@ -102,17 +103,22 @@ export class MockServer {
     }
 
     this.server = express();
+    this.server.use(bodyParser.json());
+    this.server.use(bodyParser.text());
 
-    this.server.all('*', (req, res, next) => {
+    this.server.all('*', async (req, res, next) => {
       try {
-        this.requestHandler.handle(req, res);
+        await this.requestHandler.handle(req, res);
       } catch(e) {
-        res.status(500).json({
-          error: true,
-          message: e.message,
-          object: JSON.stringify(e),
-          cause: 'mockingbirb',
-        });
+        console.error(e);
+        if (!res.headersSent) {
+          res.status(500).json({
+            error: true,
+            message: e.message,
+            object: JSON.stringify(e),
+            cause: 'mockingbirb',
+          });
+        }
       }
     });
 

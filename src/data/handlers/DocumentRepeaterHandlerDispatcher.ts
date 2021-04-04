@@ -1,7 +1,8 @@
-import { HandlerDispatcher, MockedHandlerDocumentRepeater, MockedServerConfiguration } from '../types';
+import { HandlerDispatcher, MockedHandlerDocumentRepeater, MockedServerConfiguration, RouteEvent } from '../types';
 import { Request, Response } from 'express-serve-static-core';
 import { CodeVm } from '../CodeVm';
 import { MockServer } from '../MockServer';
+import { RequestData } from '../RequestData';
 
 export class DocumentRepeaterHandlerDispatcher implements HandlerDispatcher<MockedHandlerDocumentRepeater>{
   public type = 'repeater';
@@ -13,19 +14,10 @@ export class DocumentRepeaterHandlerDispatcher implements HandlerDispatcher<Mock
   ) {
   }
 
-  public async handle(handler: MockedHandlerDocumentRepeater, req: Request, res: Response, params: object) {
-    if (handler.if) {
-      const shouldRun = await this.vm.execute(handler.if, req, res, { params });
-      if (!shouldRun) {
-        console.log("Skipped");
-        return;
-      }
-    }
-
+  public async handle(handler: MockedHandlerDocumentRepeater, request: RequestData, params: object) {
     const { content, contentType } = this.state.documents[handler.documentId];
-    res.setHeader('content-type', contentType);
-    res
-      .status(200)
-      .send(content);
+    request.setResponseHeader('content-type', contentType);
+    request.setStatus(200);
+    request.sendTextBody(content);
   }
 }

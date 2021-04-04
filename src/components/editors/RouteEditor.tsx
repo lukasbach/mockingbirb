@@ -14,6 +14,7 @@ import { MenuItem } from '../ui/menu/MenuItem';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { Padded } from '../ui/Padded';
 import { HandlerCard } from './HandlerCard';
+import { EventList } from '../lists/EventList';
 
 export const RouteEditor: React.FC<{
   routeId: string
@@ -76,6 +77,10 @@ export const RouteEditor: React.FC<{
       {routeConfig.handlers.map(handlerId => (
         <HandlerCard handlerId={ handlerId } key={handlerId}/>
       ))}
+
+      <Heading level={1}>Events</Heading>
+      <p>The following events have been recorded which matched this route.</p>
+      <EventList filter={{ route: routeConfig.route }} />
     </>
   );
 };

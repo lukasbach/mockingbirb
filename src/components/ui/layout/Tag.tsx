@@ -3,13 +3,13 @@ import { Box } from '../Box';
 import { ColorName, useTheme } from './ThemeProvider';
 
 export const Tag: React.FC<{
-  background: ColorName;
+  background: ColorName | string;
 }> = props => {
   const theme = useTheme();
 
   return (
     <Box
-      backgroundColor={theme.colors[props.background]}
+      backgroundColor={props.background in theme.colors ? (theme.colors as any)[props.background] : props.background}
       borderRadius={theme.radius}
       display="inline-block"
       padding="2px 6px"

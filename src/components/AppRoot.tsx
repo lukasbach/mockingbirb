@@ -8,6 +8,10 @@ import { RouteEditor } from './editors/RouteEditor';
 import { View } from './View';
 import { DocumentList } from './lists/DocumentList';
 import { LeftList } from './LeftList';
+import { EventList } from './lists/EventList';
+import { MethodTag } from './ui/MethodTag';
+import { Heading } from './ui/Heading';
+import { Box } from './ui/Box';
 
 export const AppRoot: React.FC<{}> = props => {
   const { state, server } = useApp();
@@ -23,6 +27,12 @@ export const AppRoot: React.FC<{}> = props => {
         </>
       )}
       left={<LeftList />}
+      right={(
+        <>
+          <Heading level={1}>Events</Heading>
+          <EventList />
+        </>
+      )}
       menuContent={(
         <>
           {state.routes.map(route => (
@@ -36,7 +46,7 @@ export const AppRoot: React.FC<{}> = props => {
                 setSelectedRoute(route.id);
               }}
             >
-              <Tag background="blue">{ route.method }</Tag> {route.route}
+              <MethodTag method={route.method} /> {route.route}
             </MenuListItem>
           ))}
 

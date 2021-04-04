@@ -11,6 +11,7 @@ export const Button: React.FC<{
   icon?: IconProp;
   ariaDescription?: string;
   embedded?: boolean;
+  fill?: boolean;
 } & HTMLProps<HTMLButtonElement>> = props => {
   const theme = useTheme();
 
@@ -21,11 +22,12 @@ export const Button: React.FC<{
       borderRadius={props.embedded ? undefined : theme.radius} // TODO
       padding="12px 12px"
       margin={props.embedded ? undefined : '0 3px'}
+      width={props.fill ? '100%' : undefined}
+      height={props.embedded ? '100%' : undefined}
       cursor="pointer"
-      display="inline-flex"
+      display={props.fill ? 'flex' : 'inline-flex'}
       alignItems="center"
       flexDirection="row"
-      height={props.embedded ? '100%' : undefined}
       elProps={{
         'aria-label': props.ariaDescription,
         ariaDescription: undefined,

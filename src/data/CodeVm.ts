@@ -2,6 +2,7 @@ import { MockedServerConfiguration } from './types';
 import { MockServer } from './MockServer';
 import vm from 'vm';
 import { Request, Response } from 'express-serve-static-core';
+import { RequestData } from './RequestData';
 
 export class CodeVm {
   constructor(
@@ -10,15 +11,10 @@ export class CodeVm {
   ) {
   }
 
-  public async execute(code: string, req?: Request, res?: Response, context?: any): Promise<any> {
+  public async execute(code: string, request: RequestData, context?: any): Promise<any> {
     const ctxObject: any = context ?? {};
 
-    if (req) {
-      ctxObject.req = req;
-    }
-    if (res) {
-      ctxObject.res = res;
-    }
+    ctxObject.request = request;
 
     const ctx = vm.createContext(ctxObject);
     vm.runInContext(code, ctx, { timeout: 5000 });

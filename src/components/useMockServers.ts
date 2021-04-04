@@ -70,6 +70,12 @@ export const useMockServers = () => {
     })();
   }, []);
 
+  useEffect(() => {
+    if (state?.id) {
+      servers.current[state?.id].start(); // TODO
+    }
+  }, [state?.id])
+
   return {
     state,
     setState,

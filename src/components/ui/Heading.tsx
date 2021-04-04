@@ -18,7 +18,7 @@ export const Heading: React.FC<{
           case 1:
             return '22px';
           case 2:
-            return '8px';
+            return '18px';
           case 3:
             return '14px';
           case 4:

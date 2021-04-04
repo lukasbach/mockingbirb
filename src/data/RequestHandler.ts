@@ -1,10 +1,11 @@
-import { HandlerDispatcher, MockedServerConfiguration } from './types';
+import { HandlerDispatcher, MockedServerConfiguration, RouteEvent } from './types';
 import { MockServer } from './MockServer';
 import { Request, Response } from 'express-serve-static-core';
 // @ts-ignore
 import pathMatch from 'path-match';
 import { DocumentRepeaterHandlerDispatcher } from './handlers/DocumentRepeaterHandlerDispatcher';
 import { CodeVm } from './CodeVm';
+import { RequestData } from './RequestData';
 
 export class RequestHandler {
   private pathMatcher: any;
@@ -22,34 +23,49 @@ export class RequestHandler {
   }
 
   public async handle(req: Request, res: Response) {
-    console.log(req);
-    const { path } = req;
+    const { path, method } = req;
+    const requestData = new RequestData(req, res);
 
-    for (const route of this.state.routes) {
+    const routesSorted = this.state.routes.sort((a, b) => b.route.length - a.route.length);
+
+    for (const route of routesSorted) {
+      requestData.setMatchedRoute(route.route);
       const match = this.pathMatcher(route.route)(path);
-      if (match !== false) {
+      if (match !== false && (route.method.toLowerCase() === 'all' || route.method.toLowerCase() === method.toLowerCase())) {
         console.log(`Route ${route.route} matched ${path}`);
 
         for (const handlerId of route.handlers) {
           const handler = this.state.handlers[handlerId];
-          let handled = false;
 
           for (const handlerDispatcher of this.handlerDispatchers) {
+            if (requestData.isCompleted()) {
+              console.log(`Skipping handlers because headers were sent.`);
+              break;
+            }
+
             if (handlerDispatcher.type === handler.type) {
-              handled = true;
-              await handlerDispatcher.handle(handler, req, res, match);
+              let shouldRun = true;
+              if (handler.if) {
+                shouldRun = await this.vm.execute(handler.if, requestData, { params: match });
+              }
+
+              if (shouldRun) {
+                requestData.addHandler(handler.id);
+                await handlerDispatcher.handle(handler, requestData, match);
+              }
+
               break;
             }
           }
-
-          if (!handled) {
-            throw Error(`Handlertype ${handler.type} does not exist`);
-          }
         }
+
+        break;
       }
     }
 
-    // no match
-    throw Error('No route in mockingbirb matched the URL provided');
+    console.log(requestData)
+    requestData.dispatch();
+    const event = requestData.toEvent();
+    this.server.recordEvent(event);
   }
 }
