@@ -21,9 +21,9 @@ export const MenuListItem: React.FC<{
       cursor={props.selected ? 'default' : 'pointer'}
       textAlign="left"
       boxSizing="border-box"
-      backgroundColor={props.selected ? theme.colors.minimalBackground : undefined}
+      backgroundColor={props.selected ? theme.colors.background3 : undefined}
       hover={props.selected ? undefined : {
-        backgroundColor: theme.colors.minimalBackground
+        backgroundColor: theme.colors.background3
       }}
       elProps={{ onClick: props.onClick }}
       display="flex"

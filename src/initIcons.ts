@@ -7,7 +7,7 @@ import {
   faChevronRight,
   faChevronUp, faCode,
   faCoffee, faFileAlt, faPencilAlt,
-  faPlus, faTrash, faTrashAlt,
+  faPlus, faTimes, faTrash, faTrashAlt, faWindowMaximize, faWindowMinimize, faWindowRestore,
 } from '@fortawesome/free-solid-svg-icons';
 
-library.add(fab, faCoffee, faPlus, faChevronDown, faChevronUp, faChevronLeft, faChevronRight, faFileAlt, faPencilAlt, faCode, faTrash, faTrashAlt)
+library.add(fab, faCoffee, faPlus, faChevronDown, faChevronUp, faChevronLeft, faChevronRight, faFileAlt, faPencilAlt, faCode, faTrash, faTrashAlt, faWindowMinimize, faWindowMaximize, faWindowRestore, faTimes)

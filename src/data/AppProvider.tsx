@@ -1,6 +1,6 @@
 import { defaultMockServerState, MockServer } from './MockServer';
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { MockedRouteConfiguration, MockedServerConfiguration } from './types';
+import { MockedRouteConfiguration, MockedServerConfiguration, ServerListItem } from './types';
 import { defaultTheme } from '../components/ui/layout/ThemeProvider';
 import { remote, app } from 'electron';
 import path from 'path';
@@ -10,7 +10,7 @@ import { useMockServers } from '../components/useMockServers';
 export interface AppState {
   state: MockedServerConfiguration;
   server: MockServer;
-  serverList: Array<{ id: string, name: string, color: string, initials: string, location: string, }>;
+  serverList: ServerListItem[];
   getRoute: (routeId: string) => MockedRouteConfiguration;
   selectServer: (id: string) => void;
   createServer: () => Promise<void>;

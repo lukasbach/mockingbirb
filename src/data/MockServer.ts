@@ -14,6 +14,7 @@ import { DocumentManager } from './DocumentManager';
 import { RequestHandler } from './RequestHandler';
 import { CodeVm } from './CodeVm';
 import { Serializer } from './serialization/Serializer';
+import { Server } from 'http';
 
 export const defaultMockServerState: MockedServerConfiguration = {
   id: uuid.v4(),
@@ -67,6 +68,7 @@ export const defaultMockServerState: MockedServerConfiguration = {
 
 export class MockServer {
   private server?: Express;
+  private httpServer?: Server;
   private requestHandler: RequestHandler;
   private readonly vm: CodeVm;
   public routes: RoutesManager;
@@ -98,8 +100,8 @@ export class MockServer {
 
   public start() {
     console.log("Starting server")
-    if (this.server) {
-      // TODO close server
+    if (this.httpServer) {
+      this.stop();
     }
 
     this.server = express();
@@ -122,17 +124,24 @@ export class MockServer {
       }
     });
 
-    const httpServer = this.server.listen(this.state.port, () => {
+    this.httpServer = this.server.listen(this.state.port, () => {
       this.state.isRunning = true;
       this.scheduleUpdate();
     });
 
     window.addEventListener("beforeunload", () => {
       console.log("Closing server");
-      httpServer.close();
+      this.stop();
     })
   }
 
+  public stop() {
+    if (this.httpServer) {
+      this.httpServer.close();
+      this.state.isRunning = false;
+      this.scheduleUpdate();
+    }
+  }
 
   public createHandler(handler: Omit<MockedHandler, 'id'>) {
     const id = uuid.v4();

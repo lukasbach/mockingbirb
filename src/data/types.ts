@@ -80,3 +80,12 @@ export interface HandlerDispatcher<H extends MockedHandler> {
   type: string;
   handle: (handler: H, request: RequestData, params: object) => Promise<void>;
 }
+
+export interface ServerListItem {
+  id: string;
+  name: string;
+  color: string;
+  initials: string;
+  location: string;
+  running: boolean;
+}

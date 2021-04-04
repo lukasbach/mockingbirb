@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { MockedServerConfiguration } from '../data/types';
+import { MockedServerConfiguration, ServerListItem } from '../data/types';
 import { defaultMockServerState, MockServer } from '../data/MockServer';
 import { remote } from 'electron';
 import fs from 'fs-extra';
@@ -12,7 +12,7 @@ const serversFile = path.join(appDataPath, 'birbfile');
 
 export const useMockServers = () => {
   const [state, setState] = useState<MockedServerConfiguration>();
-  const [serverList, setServerList] = useState<Array<{ id: string, name: string, color: string, initials: string, location: string, }>>();
+  const [serverList, setServerList] = useState<ServerListItem[]>();
   const servers = useRef<{ [serverId: string]: MockServer }>({});
 
   const updateServersFile = async (servers: string[]) => {
@@ -41,13 +41,20 @@ export const useMockServers = () => {
   };
 
   const reloadServers = async () => {
-    const list: Array<{ id: string, name: string, color: string, initials: string, location: string, }> = [];
+    const list: ServerListItem[] = [];
     const serverLocations: string[] = await fs.readJson(serversFile);
 
     for (const serverLocation of serverLocations) {
       const server = await new Deserializer(serverLocation).deserialize();
       servers.current[server.id] = new MockServer(server, () => {});
-      list.push({ id: server.id, name: server.name, initials: server.initials, color: server.color, location: server.location });
+      list.push({
+        id: server.id,
+        name: server.name,
+        initials: server.initials,
+        color: server.color,
+        location: server.location,
+        running: false,
+      });
     }
 
     setServerList(list);
@@ -69,12 +76,6 @@ export const useMockServers = () => {
       await reloadServers();
     })();
   }, []);
-
-  useEffect(() => {
-    if (state?.id) {
-      servers.current[state?.id].start(); // TODO
-    }
-  }, [state?.id])
 
   return {
     state,

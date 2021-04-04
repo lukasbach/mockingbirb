@@ -42,7 +42,8 @@ export const EventList: React.FC<{
         }
 
         return true;
-      });
+      })
+      .reverse();
   }, [props.filter, state.events, search]);
 
   return (

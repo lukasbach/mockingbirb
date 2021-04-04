@@ -2,13 +2,15 @@ import * as React from 'react';
 import { Box } from './Box';
 import { useTheme } from './layout/ThemeProvider';
 
-export const Card: React.FC<{}> = props => {
+export const Card: React.FC<{
+  noMarginBottom?: boolean;
+}> = props => {
   const theme = useTheme();
   return (
     <Box
       backgroundColor={theme.colors.background2}
       borderRadius={theme.radius}
-      marginBottom="10px"
+      marginBottom={props.noMarginBottom ? undefined : '10px'}
       css={{
         '> :last-child': {
           borderBottomLeftRadius: theme.radius,

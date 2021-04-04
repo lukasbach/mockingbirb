@@ -13,6 +13,7 @@ import { MethodTag } from './ui/MethodTag';
 import { Heading } from './ui/Heading';
 import ago from 's-ago';
 import { RouteButton } from './RouteButton';
+import { AppHeader } from './header/AppHeader';
 
 export const AppRoot: React.FC<{}> = props => {
   const { state, server } = useApp();
@@ -21,12 +22,7 @@ export const AppRoot: React.FC<{}> = props => {
 
   return (
     <AppContainer
-      title={(
-        <>
-          <h1>{state.name}</h1>
-          <p>{state.location}</p>
-        </>
-      )}
+      title={<AppHeader />}
       left={<LeftList />}
       right={(
         <>
