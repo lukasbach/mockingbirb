@@ -57,44 +57,47 @@ export const EventList: React.FC<{
           />
         </InputGroup>
 
-        {events.map((event, idx) => (
-          <Box
-            borderBottom={idx !== Object.keys(events).length - 1 ? `1px solid ${theme.colors.backgroundMenu}` : undefined}
-            key={event.date}
-          >
-            <Button minimal={true} embedded={true} fill={true}>
-              <Box
-                display="flex"
-                fontWeight="bold"
-                alignItems="center"
-                flexWrap="wrap"
-                width="100%"
-              >
-                <Box marginRight="6px">
-                  <MethodTag method={event.requestMethod} />
-                </Box>
+        {events.map((event, idx) => {
+          const isLast = idx === Object.keys(events).length - 1;
+          return (
+            <Box
+              borderBottom={!isLast ? `1px solid ${theme.colors.backgroundMenu}` : undefined}
+              key={event.date}
+            >
+              <Button minimal={true} embedded={true} fill={true} borderRadius={isLast ? 'bl br' : undefined}>
                 <Box
-                  flex="1"
-                  textAlign="left"
-                  whiteSpace="nowrap"
-                  overflow="hidden"
-                  textOverflow="ellipsis"
-                  color={theme.colors.muted}
+                  display="flex"
+                  fontWeight="bold"
+                  alignItems="center"
+                  flexWrap="wrap"
+                  width="100%"
                 >
-                  {event.path}
-                </Box>
-                {props.wide && (
-                  <Box marginLeft="10px" color={theme.colors.muted} fontWeight="normal">
-                    { ago(new Date(event.date)) }
+                  <Box marginRight="6px">
+                    <MethodTag method={event.requestMethod} />
                   </Box>
-                )}
-                <Box marginLeft="10px" color={event.responseStatus === 200 ? theme.colors.green : theme.colors.red}>
-                  { event.responseStatus }
+                  <Box
+                    flex="1"
+                    textAlign="left"
+                    whiteSpace="nowrap"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    color={theme.colors.muted}
+                  >
+                    {event.path}
+                  </Box>
+                  {props.wide && (
+                    <Box marginLeft="10px" color={theme.colors.muted} fontWeight="normal">
+                      { ago(new Date(event.date)) }
+                    </Box>
+                  )}
+                  <Box marginLeft="10px" color={event.responseStatus === 200 ? theme.colors.green : theme.colors.red}>
+                    { event.responseStatus }
+                  </Box>
                 </Box>
-              </Box>
-            </Button>
-          </Box>
-        ))}
+              </Button>
+            </Box>
+          );
+        })}
 
         {events.length === 0 && (
           <Box>

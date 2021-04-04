@@ -85,6 +85,7 @@ export const AppHeader: React.FC<{}> = props => {
                         server.start();
                       }
                     }}
+                    borderRadius="tr br"
                   >
                     {state.isRunning ? 'Stop' : 'Start'}
                   </Button>
@@ -106,6 +107,7 @@ export const AppHeader: React.FC<{}> = props => {
               icon="window-minimize"
               embedded={true}
               onClick={() => remote.getCurrentWindow().minimize()}
+              borderRadius="tl bl"
             />
             {isMaximized ? (
               <Button
@@ -124,6 +126,7 @@ export const AppHeader: React.FC<{}> = props => {
               icon="times"
               embedded={true}
               onClick={() => remote.getCurrentWindow().close()}
+              borderRadius="tr br"
             />
           </Box>
         </Card>

@@ -40,6 +40,7 @@ export const HandlerCard: React.FC<{
                 icon="code"
                 embedded={true}
                 minimal={true}
+                borderRadius="tr"
               >
                 Add Condition
               </Button>
