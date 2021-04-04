@@ -12,13 +12,16 @@ import { RoutesManager } from './RoutesManager';
 import { DocumentManager } from './DocumentManager';
 import { RequestHandler } from './RequestHandler';
 import { CodeVm } from './CodeVm';
+import { Serializer } from './serialization/Serializer';
 
 export const defaultMockServerState: MockedServerConfiguration = {
   id: uuid.v4(),
   name: 'New Mock',
   port: 5080,
+  color: 'red',
+  initials: 'NM',
   isRunning: false,
-  location: 'C:\\test',
+  location: 'C:/test',
   handlers: {
     defaultHandler: {
       id: 'defaultHandler',
@@ -67,6 +70,7 @@ export class MockServer {
   private readonly vm: CodeVm;
   public routes: RoutesManager;
   public documents: DocumentManager;
+  private serializeTimeout: any = undefined;
 
   constructor(
     private state: MockedServerConfiguration,
@@ -81,6 +85,14 @@ export class MockServer {
 
   public static createEmpty(onChange: (state: MockedServerConfiguration) => void) {
     return new MockServer(defaultMockServerState, onChange);
+  }
+
+  public getState() {
+    return this.state;
+  }
+
+  public setUpdateHandler(handler: (state: MockedServerConfiguration) => void) {
+    return this.onChange = handler;
   }
 
   public start() {
@@ -183,5 +195,17 @@ export class MockServer {
     // TODO settimeout
     console.log(this.state)
     this.onChange({...this.state});
+
+    if (this.serializeTimeout !== undefined) {
+      clearTimeout(this.serializeTimeout);
+    }
+
+    this.serializeTimeout = setTimeout(() => {
+      try {
+        new Serializer(this.state).serialize();
+      } catch (e) {
+        console.error(e);
+      }
+    }, 10000);
   }
 }

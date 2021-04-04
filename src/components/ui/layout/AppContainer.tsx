@@ -4,6 +4,8 @@ import { useTheme } from './ThemeProvider';
 
 export const AppContainer: React.FC<{
   menuContent?: JSX.Element;
+  title?: JSX.Element;
+  left?: JSX.Element;
 }> = props => {
   const theme = useTheme();
 
@@ -15,11 +17,11 @@ export const AppContainer: React.FC<{
   return (
     <Box display="flex" backgroundColor={theme.colors.background3} height="100%">
       <Box width="80px">
-        l
+        { props.left }
       </Box>
       <Box display="flex" flexDirection="column" flexGrow={1}>
         <Box {...draggable}>
-          <h1>GET something/else</h1>
+          {props.title}
         </Box>
         <Box
           flexGrow={1}

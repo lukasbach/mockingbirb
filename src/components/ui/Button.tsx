@@ -23,6 +23,7 @@ export const Button: React.FC<{
       margin={props.embedded ? undefined : '0 3px'}
       cursor="pointer"
       display="inline-flex"
+      alignItems="center"
       flexDirection="row"
       height={props.embedded ? '100%' : undefined}
       elProps={{

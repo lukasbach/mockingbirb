@@ -12,6 +12,7 @@ app.on('ready', () => {
       nodeIntegration: true,
       webSecurity: false,
       worldSafeExecuteJavaScript: true,
+      enableRemoteModule: true,
     },
     frame: false
   });
@@ -34,4 +35,13 @@ app.on('ready', () => {
   });
 });
 
-app.allowRendererProcessReuse = true;
+app.allowRendererProcessReuse = false;
+// TODO maybe set to false?
+// https://github.com/electron/electron/issues/22119
+
+// In render process:
+// setInterval(function(){
+//   process.stdout.write("")
+// },2)
+
+// https://github.com/electron/electron/issues/19554

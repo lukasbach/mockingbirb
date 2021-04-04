@@ -7,6 +7,7 @@ import { useApp } from '../data/AppProvider';
 import { RouteEditor } from './editors/RouteEditor';
 import { View } from './View';
 import { DocumentList } from './lists/DocumentList';
+import { LeftList } from './LeftList';
 
 export const AppRoot: React.FC<{}> = props => {
   const { state, server } = useApp();
@@ -15,6 +16,13 @@ export const AppRoot: React.FC<{}> = props => {
 
   return (
     <AppContainer
+      title={(
+        <>
+          <h1>{state.name}</h1>
+          <p>{state.location}</p>
+        </>
+      )}
+      left={<LeftList />}
       menuContent={(
         <>
           {state.routes.map(route => (
