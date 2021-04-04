@@ -36,9 +36,11 @@ export const MenuListItem: React.FC<{
       <Box
         display="flex"
         flexDirection="column"
+        flexGrow={1}
       >
         <Box
           display="flex"
+          flexGrow={1}
         >
           <Box flexGrow={1}>
             {props.children}

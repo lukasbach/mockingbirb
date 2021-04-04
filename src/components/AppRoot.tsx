@@ -11,7 +11,8 @@ import { LeftList } from './LeftList';
 import { EventList } from './lists/EventList';
 import { MethodTag } from './ui/MethodTag';
 import { Heading } from './ui/Heading';
-import { Box } from './ui/Box';
+import ago from 's-ago';
+import { RouteButton } from './RouteButton';
 
 export const AppRoot: React.FC<{}> = props => {
   const { state, server } = useApp();
@@ -36,18 +37,15 @@ export const AppRoot: React.FC<{}> = props => {
       menuContent={(
         <>
           {state.routes.map(route => (
-            <MenuListItem
-              rightContent={<Tag background="background">12</Tag>}
-              subtitle="2 minutes ago"
-              key={route.id}
-              selected={view === View.RouteConfig && route.id === selectedRoute}
+            <RouteButton
+              route={route}
+              view={view}
+              selectedRoute={selectedRoute}
               onClick={() => {
                 setView(View.RouteConfig);
                 setSelectedRoute(route.id);
               }}
-            >
-              <MethodTag method={route.method} /> {route.route}
-            </MenuListItem>
+            />
           ))}
 
           <MenuListItem

@@ -80,7 +80,7 @@ export const RouteEditor: React.FC<{
 
       <Heading level={1}>Events</Heading>
       <p>The following events have been recorded which matched this route.</p>
-      <EventList filter={{ route: routeConfig.route }} />
+      <EventList filter={{ route: routeConfig.route }} wide={true} />
     </>
   );
 };

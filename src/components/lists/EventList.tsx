@@ -4,18 +4,19 @@ import { useApp } from '../../data/AppProvider';
 import { Card } from '../ui/Card';
 import { InputGroup } from '../ui/form/InputGroup';
 import { TextInput } from '../ui/form/TextInput';
-import { Heading } from '../ui/Heading';
 import { MethodTag } from '../ui/MethodTag';
 import { useTheme } from '../ui/layout/ThemeProvider';
 import { Button } from '../ui/Button';
 import { useMemo, useState } from 'react';
 import { LabelText } from '../ui/form/LabelText';
+import ago from 's-ago';
 
 export const EventList: React.FC<{
   filter?: {
     handler?: string;
     route?: string;
-  }
+  };
+  wide?: boolean;
 }> = props => {
   const { state } = useApp();
   const [search, setSearch] = useState('');
@@ -81,6 +82,11 @@ export const EventList: React.FC<{
                 >
                   {event.path}
                 </Box>
+                {props.wide && (
+                  <Box marginLeft="10px" color={theme.colors.muted} fontWeight="normal">
+                    { ago(new Date(event.date)) }
+                  </Box>
+                )}
                 <Box marginLeft="10px" color={event.responseStatus === 200 ? theme.colors.green : theme.colors.red}>
                   { event.responseStatus }
                 </Box>
