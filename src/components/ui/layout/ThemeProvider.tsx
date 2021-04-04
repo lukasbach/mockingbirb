@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 
 export const defaultTheme = {
@@ -34,6 +34,7 @@ export const defaultTheme = {
   },
   radius: '8px',
   contentPadding: '14px 18px',
+  keyboardMode: false,
 };
 
 export type Theme = typeof defaultTheme;
@@ -43,11 +44,27 @@ const ThemeContext = React.createContext<Theme>(defaultTheme);
 
 export const useTheme = () => React.useContext(ThemeContext);
 
-export const ThemeProvider: React.FC = ({ children }) => (
-  <ThemeContext.Provider value={defaultTheme}>
-    { children }
-  </ThemeContext.Provider>
-);
+export const ThemeProvider: React.FC = ({ children }) => {
+  const [keyboardMode, setKeyboardMode] = useState(false);
+
+  useEffect(() => {
+    const keydownListener = () => setKeyboardMode(true);
+    const mousedownListener = () => setKeyboardMode(false);
+    document.addEventListener('keydown', keydownListener);
+    document.addEventListener('mousedown', mousedownListener);
+
+    return () => {
+      document.removeEventListener('keydown', keydownListener);
+      document.removeEventListener('mousedown', mousedownListener);
+    }
+  }, []);
+
+  return (
+    <ThemeContext.Provider value={{...defaultTheme, keyboardMode}}>
+      { children }
+    </ThemeContext.Provider>
+  );
+};
 
 /*
     background: '#202124',

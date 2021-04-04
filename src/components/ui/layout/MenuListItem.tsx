@@ -22,10 +22,11 @@ export const MenuListItem: React.FC<{
       textAlign="left"
       boxSizing="border-box"
       backgroundColor={props.selected ? theme.colors.background3 : undefined}
+      outline="none"
       hover={props.selected ? undefined : {
         backgroundColor: theme.colors.background3
       }}
-      elProps={{ onClick: props.onClick }}
+      elProps={{ onClick: props.onClick, tabIndex: 1 }}
       display="flex"
     >
       {props.icon && (

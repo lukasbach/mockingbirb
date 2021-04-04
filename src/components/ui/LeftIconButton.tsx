@@ -11,6 +11,7 @@ export const LeftIconButton: React.FC<{
 
   return (
     <Box
+      as="button"
       backgroundColor={props.active ? theme.colors.primary : theme.colors.background}
       color={theme.colors.text}
       borderRadius={props.active ? theme.radius : '9999px'}
