@@ -44,7 +44,8 @@ export const Button: React.FC<{
         zIndex: 200,
       }}
       active={{
-        backgroundColor: props.primary ? theme.colors.text : theme.colors.primary,
+        // backgroundColor: props.primary ? theme.colors.text : theme.colors.primary,
+        boxShadow: `0 0 0 3px ${props.primary ? theme.colors.primary : theme.colors.text}`,
         color: props.primary ? theme.colors.background3 : undefined,
       }}
       {...getBorderRadii(props.borderRadius, theme)}

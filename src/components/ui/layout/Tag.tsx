@@ -14,6 +14,8 @@ export const Tag: React.FC<{
       display="inline-block"
       padding="2px 6px"
       margin="0 2px"
+      fontWeight="bold"
+      fontSize="12px"
     >
       { props.children }
     </Box>

@@ -66,7 +66,7 @@ export const AppContainer: React.FC<{
             overflowX="auto"
             overflowY="auto"
             flex="1"
-            padding="20px"
+            padding="20px 10px 20px 20px"
           >
             {props.children}
           </Box>
@@ -74,7 +74,7 @@ export const AppContainer: React.FC<{
             <Box
               overflowX="auto"
               overflowY="auto"
-              padding="20px"
+              padding="20px 20px 20px 10px"
               width="400px"
             >
               {props.right}

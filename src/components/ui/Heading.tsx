@@ -3,7 +3,8 @@ import { Box } from './Box';
 import { useTheme } from './layout/ThemeProvider';
 
 export const Heading: React.FC<{
-  level: 1 | 2 | 3 | 4 | 5 | 6
+  level: 1 | 2 | 3 | 4 | 5 | 6;
+  noTopMargin?: boolean;
 }> = props => {
   const theme = useTheme();
 
@@ -11,7 +12,9 @@ export const Heading: React.FC<{
     <Box
       as={`h${props.level}` as 'h1'}
       color={props.level < 2 ? theme.colors.muted : theme.colors.text}
-      marginTop="28px"
+      margin="0"
+      marginBottom="15px"
+      marginTop={!props.noTopMargin ? (props.level === 1 ? '40px' : '28px') : undefined}
       fontWeight="bolder"
       fontSize={(() => {
         switch (props.level) {
