@@ -17,6 +17,7 @@ export interface CodeEditorProps {
   collapsedDefaultValue?: boolean,
   onMount?: (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof monacoEditor) => void,
   onUnMount?: (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof monacoEditor) => void,
+  controls?: JSX.Element;
 }
 
 export const CodeEditor: React.FC<CodeEditorProps> = props => {
@@ -51,6 +52,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = props => {
           </Padded>
         </Box>
         <Box>
+          {props.controls}
           <Button
             icon={collapsed ? 'chevron-down' : 'chevron-up'}
             onClick={() => setCollapsed(!collapsed)}
@@ -65,7 +67,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = props => {
         <ResizeSensor onResize={entries => {
           setWidth(entries[0].contentRect.width);
         }}>
-          <Box maxWidth="100%">
+          <Box maxWidth="100%" position="relative" zIndex={110}>
             <MonacoEditor
               height={height}
               width={width}

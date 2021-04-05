@@ -37,17 +37,17 @@ export const ScriptCodeEditor: React.FC<{
           allowNonTsExtensions: true,
         });
 
-        const libUri = 'inmemory://model/global.d.ts';
+        const libUri = `inmemory://model/global_${returnType}.d.ts`;
 
-        if (!monaco.editor.getModel(monaco.Uri.parse(libUri))) {
-          let libSource = scriptTypes; //.replace(/contextTypes/g, 'mockingbirb');
-          libSource += `\n\ndeclare module 'mockingbirb' {\n`;
-          libSource += `  import { RequestData } from 'RequestData';\n`;
-          libSource += `  declare function run(handler: (request: RequestData) => ${returnType} | Promise<${returnType}>): void;\n`;
-          libSource += `}\n`;
-          monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
-          monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));
-        }
+        monaco.editor.getModel(monaco.Uri.parse(libUri))?.dispose();
+
+        let libSource = scriptTypes; //.replace(/contextTypes/g, 'mockingbirb');
+        libSource += `\n\ndeclare module 'mockingbirb' {\n`;
+        libSource += `  import { RequestData } from 'RequestData';\n`;
+        libSource += `  declare function run(handler: (request: RequestData) => ${returnType} | Promise<${returnType}>): void;\n`;
+        libSource += `}\n`;
+        monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
+        monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));
 
         props.onMount?.(editor, monaco);
       }}
