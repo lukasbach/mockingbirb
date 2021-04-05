@@ -31,7 +31,7 @@ export const RouteEditor: React.FC<{
 
   return (
     <>
-      <Heading level={1} noTopMargin={true}>Route Configuration</Heading>
+      <Heading level={1}>Route Configuration</Heading>
       <Card>
         <LabelText>
           <Box display="flex">

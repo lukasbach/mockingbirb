@@ -37,10 +37,10 @@ export const AppContainer: React.FC<{
         },
       }}
     >
-      <Box width="80px">
+      <Box width="80px" minWidth="80px">
         { props.left }
       </Box>
-      <Box display="flex" flexDirection="column" flexGrow={1}>
+      <Box display="flex" flexDirection="column" flexGrow={1} maxWidth="100%" minWidth="0">
         <Box {...draggable}>
           {props.title}
         </Box>
@@ -67,6 +67,7 @@ export const AppContainer: React.FC<{
             overflowY="auto"
             flex="1"
             padding="20px 10px 20px 20px"
+            minWidth="0"
           >
             {props.children}
           </Box>
@@ -76,6 +77,7 @@ export const AppContainer: React.FC<{
               overflowY="auto"
               padding="20px 20px 20px 10px"
               width="400px"
+              minWidth="400px"
             >
               {props.right}
             </Box>

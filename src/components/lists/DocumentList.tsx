@@ -56,7 +56,6 @@ export const DocumentList: React.FC<{}> = props => {
           {expandedDocument === document.id && (
             <CodeEditor
               value={document.content}
-              onChange={() => {}}
               title="Document Contents"
               collapsedDefaultValue={false}
             />

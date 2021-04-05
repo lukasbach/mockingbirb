@@ -12,6 +12,9 @@ import { Button } from '../ui/Button';
 import { handlerNames } from '../../texts';
 import { BottomBorderItem } from '../BottomBorderItem';
 import { useMemo } from 'react';
+import { Tooltip } from '../ui/overlay/Tooltip';
+import { defaultCodeImplementation, defaultHandlerImplementation } from '../../data/defaultCodeImplementation';
+import { ScriptCodeEditor } from '../ui/ScriptCodeEditor';
 
 
 function moveItem<T>(array: T[], from: number, to: number) {
@@ -45,56 +48,83 @@ export const HandlerCard: React.FC<{
               <Box>
                 {route && (
                   <>
-                    <Button
-                      icon="chevron-up"
-                      embedded={true}
-                      minimal={true}
-                      disabled={indexInRoute === 0}
-                      onClick={() => {
-                        if (indexInRoute !== undefined) {
-                          server.routes.updateRoute(route.id, {
-                            handlers: moveItem(route.handlers, indexInRoute, indexInRoute - 1)
-                          });
-                        }
-                      }}
-                    />
-                    <Button
-                      icon="chevron-down"
-                      embedded={true}
-                      minimal={true}
-                      disabled={indexInRoute === route?.handlers.length - 1}
-                      onClick={() => {
-                        if (indexInRoute !== undefined) {
-                          server.routes.updateRoute(route.id, {
-                            handlers: moveItem(route.handlers, indexInRoute, indexInRoute + 1)
-                          });
-                        }
-                      }}
-                    />
+                    <Tooltip content="Move handler up">
+                      <Button
+                        icon="chevron-up"
+                        embedded={true}
+                        minimal={true}
+                        disabled={indexInRoute === 0}
+                        onClick={() => {
+                          if (indexInRoute !== undefined) {
+                            server.routes.updateRoute(route.id, {
+                              handlers: moveItem(route.handlers, indexInRoute, indexInRoute - 1)
+                            });
+                          }
+                        }}
+                      />
+                    </Tooltip>
+                    <Tooltip content="Move handler down">
+                      <Button
+                        icon="chevron-down"
+                        embedded={true}
+                        minimal={true}
+                        disabled={indexInRoute === route?.handlers.length - 1}
+                        onClick={() => {
+                          if (indexInRoute !== undefined) {
+                            server.routes.updateRoute(route.id, {
+                              handlers: moveItem(route.handlers, indexInRoute, indexInRoute + 1)
+                            });
+                          }
+                        }}
+                      />
+                    </Tooltip>
                   </>
                 )}
-                <Button
-                  icon="pencil-alt"
-                  embedded={true}
-                  minimal={true}
-                />
-                <Button
-                  icon="trash-alt"
-                  embedded={true}
-                  minimal={true}
-                />
-                <Button
-                  icon="code"
-                  embedded={true}
-                  minimal={true}
-                  borderRadius="tr"
-                >
-                  Add Condition
-                </Button>
+                <Tooltip content="Edit Handler">
+                  <Button
+                    icon="pencil-alt"
+                    embedded={true}
+                    minimal={true}
+                  />
+                </Tooltip>
+                <Tooltip content="Delete Handler">
+                  <Button
+                    icon="trash-alt"
+                    embedded={true}
+                    minimal={true}
+                  />
+                </Tooltip>
+                {!handler.if && (
+                  <Tooltip content="Add custom code to decide whether this handler should be executed for a HTTP request">
+                    <Button
+                      icon="code"
+                      embedded={true}
+                      minimal={true}
+                      borderRadius="tr"
+                      onClick={() => {
+                        server.handlers.updateHandler(props.handlerId, { if: defaultHandlerImplementation })
+                      }}
+                    >
+                      Add Condition
+                    </Button>
+                  </Tooltip>
+                )}
               </Box>
             )}
           </Box>
         </BottomBorderItem>
+
+        {handler.if && (
+          <BottomBorderItem hasBorder={true}>
+            <ScriptCodeEditor
+              returnType="boolean"
+              title="Condition to run"
+              value={handler.if}
+              onChange={value => server.handlers.updateHandler(props.handlerId, { if: value })}
+              collapsedDefaultValue={true}
+            />
+          </BottomBorderItem>
+        )}
 
         {handler.type === 'repeater' && (
           <RepeaterHandlerEditor handlerId={props.handlerId} />
