@@ -39,8 +39,8 @@ export const SearchSelect: React.FC<{
                 icon={option.icon}
                 onClick={() => {
                   setSearchValue(undefined);
-                  setOpen(false);
                   props.onChange(option.value);
+                  setOpen(false);
                 }}
               />
             ))
@@ -69,8 +69,13 @@ export const SearchSelect: React.FC<{
         <TextInput
           onFocus={() => {
             setOpen(true);
-            console.log(inputRef.current)
             inputRef.current?.select();
+          }}
+          onBlur={() => {
+            setTimeout(() => {
+              setSearchValue(undefined);
+              setOpen(false)
+            }, 500);
           }}
           value={searchValue ?? props.options.find(o => o.value === props.value)?.title ?? props.value}
           onChangeValue={setSearchValue}
