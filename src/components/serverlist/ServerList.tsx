@@ -4,6 +4,7 @@ import { ServerIconButton } from './ServerIconButton';
 import { useTheme } from '../ui/layout/ThemeProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Box } from '../ui/Box';
+import { Tooltip } from '../ui/overlay/Tooltip';
 
 export const ServerList: React.FC<{}> = props => {
   const { serverList, state, selectServer, createServer } = useApp();
@@ -14,25 +15,46 @@ export const ServerList: React.FC<{}> = props => {
       display="flex"
       flexDirection="column"
       alignItems="center"
-      paddingTop="24px"
+      padding="24px 0"
+      height="100%"
     >
-      {serverList.map(server => (
-        <ServerIconButton
-          key={server.id}
-          color={server.color}
-          active={server.id === state.id}
-          onClick={() => selectServer(server.id)}
-        >
-          {server.initials}
-        </ServerIconButton>
-      ))}
-      <ServerIconButton
-        color={theme.colors.background}
-        active={false}
-        onClick={() => createServer()}
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        flexGrow={1}
       >
-        <FontAwesomeIcon icon="plus" />
-      </ServerIconButton>
+        {serverList.map(server => (
+          <Tooltip content={server.name} key={server.id} positions={['right']}>
+            <ServerIconButton
+              color={server.color}
+              active={server.id === state.id}
+              onClick={() => selectServer(server.id)}
+            >
+              {server.initials}
+            </ServerIconButton>
+          </Tooltip>
+        ))}
+        <Tooltip content="Create new Mocking Server" positions={['right']}>
+          <ServerIconButton
+            color={theme.colors.background}
+            active={false}
+            onClick={() => createServer()}
+          >
+            <FontAwesomeIcon icon="plus" />
+          </ServerIconButton>
+        </Tooltip>
+      </Box>
+      <Box>
+        <Tooltip content="Settings" positions={['right']}>
+          <ServerIconButton
+            color={theme.colors.background}
+            active={false}
+          >
+            <FontAwesomeIcon icon="cog" />
+          </ServerIconButton>
+        </Tooltip>
+      </Box>
     </Box>
   );
 };

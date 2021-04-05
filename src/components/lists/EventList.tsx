@@ -11,6 +11,7 @@ import { useMemo, useState } from 'react';
 import { LabelText } from '../ui/form/LabelText';
 import ago from 's-ago';
 import { BottomBorderItem } from '../BottomBorderItem';
+import { Tooltip } from '../ui/overlay/Tooltip';
 
 export const EventList: React.FC<{
   filter?: {
@@ -60,7 +61,7 @@ export const EventList: React.FC<{
 
         {events.map((event, idx) => {
           const isLast = idx === Object.keys(events).length - 1;
-          return (
+          let item = (
             <BottomBorderItem
               hasBorder={!isLast}
               key={event.date}
@@ -98,6 +99,25 @@ export const EventList: React.FC<{
               </Button>
             </BottomBorderItem>
           );
+
+          if (props.wide) {
+            return item;
+          } else {
+            return (
+              <Tooltip
+                fill={true}
+                content={(
+                  <>
+                    <Box fontWeight="bold">{ago(new Date(event.date))}</Box>
+                    <Box color={theme.colors.muted}>{new Date(event.date).toLocaleString()}</Box>
+                  </>
+                )}
+                positions={['left', 'right']}
+              >
+                {item}
+              </Tooltip>
+            )
+          }
         })}
 
         {events.length === 0 && (
