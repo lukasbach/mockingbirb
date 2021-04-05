@@ -46,12 +46,26 @@ export const RouteEditor: React.FC<{
         <Box display="flex">
           <Box width="140px">
             <InputGroup>
-              <SelectInput>
+              <SelectInput
+                value={routeConfig.method.toUpperCase()}
+                onChangeValue={v => server.routes.updateRoute(props.routeId, { method: v.toLowerCase() })}
+              >
+                <option value="ALL">ALL</option>
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
-                <option value="DELETE">DELETE</option>
                 <option value="PUT">PUT</option>
-                <option value="OPTION">OPTION</option>
+                <option value="PATCH">PATCH</option>
+                <option value="DELETE">DELETE</option>
+                <option value="OPTIONS">OPTIONS</option>
+                <option value="COPY">COPY</option>
+                <option value="HEAD">HEAD</option>
+                <option value="LINK">LINK</option>
+                <option value="UNLINK">UNLINK</option>
+                <option value="PURGE">PURGE</option>
+                <option value="LOCK">LOCK</option>
+                <option value="UNLOCK">UNLOCK</option>
+                <option value="PROPFIND">PROPFIND</option>
+                <option value="VIEW">VIEW</option>
               </SelectInput>
             </InputGroup>
           </Box>
