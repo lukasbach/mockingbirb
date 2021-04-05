@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Box } from './Box';
-import { useTheme } from './layout/ThemeProvider';
+import { Box } from '../ui/Box';
+import { useTheme } from '../ui/layout/ThemeProvider';
 
-export const LeftIconButton: React.FC<{
+export const ServerIconButton: React.FC<{
   color: string;
   active?: boolean;
   onClick?: () => void;

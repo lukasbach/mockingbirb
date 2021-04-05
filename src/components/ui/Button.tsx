@@ -17,6 +17,8 @@ export const Button: React.FC<{
 } & HTMLProps<HTMLButtonElement>> = props => {
   const theme = useTheme();
 
+  const {ariaDescription, minimal, embedded, fill, borderRadius, ...elProps} = props;
+
   return (
     <Box
       as="button"
@@ -34,10 +36,7 @@ export const Button: React.FC<{
       zIndex={100}
       elProps={{
         'aria-label': props.ariaDescription,
-        ariaDescription: undefined,
-        minimal: undefined,
-        embedded: undefined,
-        ...props,
+        ...elProps,
       }}
       hover={{
         boxShadow: `0 0 0 3px ${props.primary ? theme.colors.text : theme.colors.primary}`,

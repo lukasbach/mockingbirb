@@ -7,7 +7,7 @@ import { useApp } from '../data/AppProvider';
 import { RouteEditor } from './editors/RouteEditor';
 import { View } from './View';
 import { DocumentList } from './lists/DocumentList';
-import { LeftList } from './LeftList';
+import { ServerList } from './serverlist/ServerList';
 import { EventList } from './lists/EventList';
 import { MethodTag } from './ui/MethodTag';
 import { Heading } from './ui/Heading';
@@ -23,7 +23,7 @@ export const AppRoot: React.FC<{}> = props => {
   return (
     <AppContainer
       title={<AppHeader />}
-      left={<LeftList />}
+      left={<ServerList />}
       right={(
         <>
           <Heading level={1}>Events</Heading>
