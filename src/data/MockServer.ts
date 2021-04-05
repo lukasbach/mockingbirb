@@ -16,6 +16,7 @@ import { CodeVm } from './CodeVm';
 import { Serializer } from './serialization/Serializer';
 import { Server } from 'http';
 import { defaultCodeImplementation } from './defaultCodeImplementation';
+import { HandlerManager } from './HandlerManager';
 
 export const defaultMockServerState: MockedServerConfiguration = {
   id: uuid.v4(),
@@ -74,6 +75,7 @@ export class MockServer {
   private readonly vm: CodeVm;
   public routes: RoutesManager;
   public documents: DocumentManager;
+  public handlers: HandlerManager;
   private serializeTimeout: any = undefined;
 
   constructor(
@@ -84,6 +86,7 @@ export class MockServer {
     this.vm = new CodeVm(state, this);
     this.routes = new RoutesManager(state, this);
     this.documents = new DocumentManager(state, this);
+    this.handlers = new HandlerManager(state, this);
     this.requestHandler = new RequestHandler(state, this, this.vm);
   }
 
@@ -142,60 +145,6 @@ export class MockServer {
       this.state.isRunning = false;
       this.scheduleUpdate();
     }
-  }
-
-  public createHandler(handler: Omit<MockedHandler, 'id'>) {
-    const id = uuid.v4();
-    this.state.handlers[id] = {...handler, id};
-    this.scheduleUpdate();
-    return id;
-  }
-  public updateHandler(id: string, handler: Partial<MockedHandler>) {
-    if (handler.id && id !== handler.id) {
-      delete this.state.handlers[id];
-    }
-    this.state.handlers[handler.id ?? id] = {...this.state.handlers[id], ...handler};
-    this.scheduleUpdate();
-  }
-  public deleteHandler(id: string) {
-    delete this.state.handlers[id];
-    this.scheduleUpdate();
-  }
-  public initializeNewHandlerFor(routeId: string, handlerType: string) {
-    let handlerId;
-    const routeConfig = this.routes.getRoute(routeId);
-
-    switch (handlerType) {
-      case 'repeater':
-        handlerId = this.createHandler({
-          type: 'repeater',
-          name: `Document Repeater for ${routeConfig.route}`,
-          documentId: '',
-          status: 200,
-        } as Omit<MockedHandlerDocumentRepeater, 'id'>);
-        break;
-      case 'smartrepeater':
-        handlerId = this.createHandler({
-          type: 'smartrepeater',
-          name: `Smart Document Repeater for ${routeConfig.route}`,
-          documents: [],
-        } as Omit<MockedHandlerSmartDocumentRepeater, 'id'>);
-        break;
-      case 'logic':
-        handlerId = this.createHandler({
-          type: 'logic',
-          name: `Logic Handler for ${routeConfig.route}`,
-          code: defaultCodeImplementation,
-          status: 200,
-        } as Omit<MockedHandlerLogic, 'id'>);
-        break;
-      default:
-        throw Error(`Unknown handler type ${handlerType}`);
-    }
-
-    this.routes.updateRoute(routeId, {
-      handlers: [...routeConfig.handlers, handlerId]
-    });
   }
 
   public recordEvent(event: RouteEvent) {

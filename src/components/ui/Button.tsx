@@ -14,6 +14,7 @@ export const Button: React.FC<{
   embedded?: boolean;
   fill?: boolean;
   borderRadius?: BorderRadiusShorthand;
+  disabled?: boolean;
 } & HTMLProps<HTMLButtonElement>> = props => {
   const theme = useTheme();
 
@@ -28,21 +29,24 @@ export const Button: React.FC<{
       margin={props.embedded ? undefined : '0 3px'}
       width={props.fill ? '100%' : undefined}
       height={props.embedded ? '100%' : undefined}
-      cursor="pointer"
+      cursor={props.disabled ? 'not-allowed' : 'pointer'}
       display={props.fill ? 'flex' : 'inline-flex'}
       alignItems="center"
       flexDirection="row"
       position="relative"
       zIndex={100}
+      color={props.disabled ? theme.colors.muted : undefined}
       elProps={{
         'aria-label': props.ariaDescription,
+        'aria-disabled': props.disabled,
+        disabled: props.disabled,
         ...elProps,
       }}
-      hover={{
+      hover={props.disabled ? undefined : {
         boxShadow: `0 0 0 3px ${props.primary ? theme.colors.text : theme.colors.primary}`,
         zIndex: 200,
       }}
-      active={{
+      active={props.disabled ? undefined : {
         // backgroundColor: props.primary ? theme.colors.text : theme.colors.primary,
         boxShadow: `0 0 0 3px ${props.primary ? theme.colors.primary : theme.colors.text}`,
         color: props.primary ? theme.colors.background3 : undefined,

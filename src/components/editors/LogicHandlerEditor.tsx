@@ -13,7 +13,7 @@ export const LogicHandlerEditor: React.FC<{
   return (
     <ScriptCodeEditor
       value={handler.code}
-      onChange={code => server.updateHandler(handler.id, { code } as MockedHandlerLogic)}
+      onChange={code => server.handlers.updateHandler(handler.id, { code } as MockedHandlerLogic)}
       title="Handler Implementation"
     />
   );

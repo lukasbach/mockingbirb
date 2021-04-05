@@ -24,11 +24,11 @@ export const RepeaterHandlerEditor: React.FC<{
           options={Object.values(state.documents).map(document => ({ value: document.id, title: document.name }))}
           value={handler.documentId}
           onChange={(documentId) => {
-            server.updateHandler(handler.id, { documentId } as MockedHandlerDocumentRepeater);
+            server.handlers.updateHandler(handler.id, { documentId } as MockedHandlerDocumentRepeater);
           }}
           onCreate={(name) => {
             const documentId = server.documents.createDocument({ name, content: '{}', contentType: 'application/json' });
-            server.updateHandler(handler.id, { documentId } as MockedHandlerDocumentRepeater);
+            server.handlers.updateHandler(handler.id, { documentId } as MockedHandlerDocumentRepeater);
           }}
         />
       </label>

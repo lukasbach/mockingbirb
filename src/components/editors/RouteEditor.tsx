@@ -86,16 +86,16 @@ export const RouteEditor: React.FC<{
       <Heading level={1}>Handlers</Heading>
       <Popover positions={['bottom']} content={(
         <Menu>
-          <MenuItem text="Mock Document" onClick={() => server.initializeNewHandlerFor(props.routeId, 'repeater')} />
-          <MenuItem text="Mock multiple Documents" onClick={() => server.initializeNewHandlerFor(props.routeId, 'smartrepeater')} />
-          <MenuItem text="Custom Handler" onClick={() => server.initializeNewHandlerFor(props.routeId, 'logic')} />
+          <MenuItem text="Mock Document" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'repeater')} />
+          <MenuItem text="Mock multiple Documents" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'smartrepeater')} />
+          <MenuItem text="Custom Handler" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'logic')} />
         </Menu>
       )}>
         <Button>Add Handler</Button>
       </Popover>
 
       {routeConfig.handlers.map(handlerId => (
-        <HandlerCard handlerId={ handlerId } key={handlerId}/>
+        <HandlerCard handlerId={ handlerId } key={handlerId} routeId={props.routeId}/>
       ))}
 
       <Heading level={1}>Actions</Heading>
