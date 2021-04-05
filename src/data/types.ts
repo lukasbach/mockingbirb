@@ -1,4 +1,3 @@
-import { Request, Response } from 'express-serve-static-core';
 import { RequestData } from './RequestData';
 
 type TypedObject<K extends string, V> = { [key in K]: V };

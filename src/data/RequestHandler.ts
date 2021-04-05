@@ -6,6 +6,7 @@ import pathMatch from 'path-match';
 import { DocumentRepeaterHandlerDispatcher } from './handlers/DocumentRepeaterHandlerDispatcher';
 import { CodeVm } from './CodeVm';
 import { RequestData } from './RequestData';
+import { LogicHandlerDispatcher } from './handlers/LogicHandlerDispatcher';
 
 export class RequestHandler {
   private pathMatcher: any;
@@ -19,6 +20,7 @@ export class RequestHandler {
     this.pathMatcher = pathMatch({ sensitive: false, strict: false, end: false });
     this.handlerDispatchers = [
       new DocumentRepeaterHandlerDispatcher(state, server, vm),
+      new LogicHandlerDispatcher(state, server, vm),
     ]
   }
 

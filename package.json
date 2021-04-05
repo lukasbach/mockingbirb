@@ -15,6 +15,7 @@
     "start:run-electron": "cross-env NODE_ENV=development electron ./app/electron-main.js",
     "start": "yarn build:electron-main:dev && concurrently \"yarn start:renderer:dev\" \"yarn start:run-electron\" -n renderer,electron",
     "cleanup": "rimraf app && rimraf out",
+    "prepare:scripttypes": "tsc --p tsconfig.scripttypes.json && move-file ./scripttypes.d.ts ./resources/scripttypes.d.ts",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write ."
   },
@@ -51,6 +52,7 @@
     "html-webpack-plugin": "^4.4.1",
     "monaco-editor": "^0.23.0",
     "monaco-editor-webpack-plugin": "^3.0.1",
+    "move-file-cli": "^2.0.0",
     "nodemon": "^2.0.4",
     "path-match": "^1.2.4",
     "prettier": "^2.1.1",

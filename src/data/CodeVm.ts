@@ -1,7 +1,6 @@
 import { MockedServerConfiguration } from './types';
 import { MockServer } from './MockServer';
 import vm from 'vm';
-import { Request, Response } from 'express-serve-static-core';
 import { RequestData } from './RequestData';
 
 export class CodeVm {
@@ -12,14 +11,25 @@ export class CodeVm {
   }
 
   public async execute(code: string, request: RequestData, context?: any): Promise<any> {
-    const ctxObject: any = context ?? {};
+    return new Promise<any>((res, rej) => {
+      const codeWithoutImports = code.replace(/(import[^'"]+['"][^'"]+['"];?)/g, '');
 
-    ctxObject.request = request;
+      const ctxObject: any = context ?? {};
 
-    const ctx = vm.createContext(ctxObject);
-    vm.runInContext(code, ctx, { timeout: 5000 });
-    const result = ctx.result;
-    console.log("Returned")
-    return typeof result.then === 'function' ? await result : result;
+      ctxObject.run = (handler: (request: RequestData) => any | Promise<any>) => {
+        const result = handler(request);
+
+        if (result === undefined) {
+          res(undefined);
+        } else if (typeof (result as Promise<void>).then === 'function') {
+          (result as Promise<any>).then(res);
+        } else {
+          res(result);
+        }
+      }
+
+      const ctx = vm.createContext(ctxObject);
+      vm.runInContext(codeWithoutImports, ctx, { timeout: 5000 });
+    });
   }
 }

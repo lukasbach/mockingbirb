@@ -15,6 +15,7 @@ import { RequestHandler } from './RequestHandler';
 import { CodeVm } from './CodeVm';
 import { Serializer } from './serialization/Serializer';
 import { Server } from 'http';
+import { defaultCodeImplementation } from './defaultCodeImplementation';
 
 export const defaultMockServerState: MockedServerConfiguration = {
   id: uuid.v4(),
@@ -184,7 +185,7 @@ export class MockServer {
         handlerId = this.createHandler({
           type: 'logic',
           name: `Logic Handler for ${routeConfig.route}`,
-          code: '',
+          code: defaultCodeImplementation,
           status: 200,
         } as Omit<MockedHandlerLogic, 'id'>);
         break;

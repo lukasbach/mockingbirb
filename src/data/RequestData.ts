@@ -1,8 +1,11 @@
 import { Request, Response } from 'express-serve-static-core';
 import { RouteEvent } from './types';
+// @ts-ignore
+import pathMatch from 'path-match';
 
 export class RequestData {
   private _route?: string;
+  private _params?: object;
   private _handlers: string[];
   private readonly _requestHeaders: object;
   private readonly _requestBody: string;
@@ -12,12 +15,17 @@ export class RequestData {
   private _responseStatus?: number;
   private _responseDocumentId?: string;
   private readonly _date: number;
+  private readonly pathMatcher: any;
 
   public get requestHeaders() {
     return this._requestHeaders;
   }
   public get requestBody() {
     return this._requestBody;
+  }
+  public get params() {
+    // TODO match with current route, not only with final route
+    return this._params;
   }
 
   /** @internal */
@@ -31,11 +39,13 @@ export class RequestData {
     this._requestMethod = req.method;
     this._responseHeaders = {};
     this._handlers = [];
+    this.pathMatcher = pathMatch({ sensitive: false, strict: false, end: false });
   }
 
   /** @internal */
   public setMatchedRoute(route: string) {
     this._route = route;
+    this._params = this.pathMatcher(route)(this.req.path);
   }
 
   /** @internal */

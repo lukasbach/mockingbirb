@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "outFile": "scripttypes.d.ts",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowJs": true
+  },
+  "include": [
+    "src/data/contextTypes"
+  ],
+  "files": [
+    "src/data/contextTypes.ts"
+  ],
+  "exclude": ["node_modules/**/*"]
+}
