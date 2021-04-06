@@ -6,7 +6,7 @@ import { Box } from '../ui/Box';
 import { InputGroup } from '../ui/form/InputGroup';
 import { SelectInput } from '../ui/form/SelectInput';
 import { TextInput } from '../ui/form/TextInput';
-import { useApp } from '../../data/AppProvider';
+import { useApp } from '../AppRoot';
 import { Button } from '../ui/Button';
 import { Popover } from '../ui/overlay/Popover';
 import { Menu } from '../ui/menu/Menu';

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useApp } from '../../data/AppProvider';
+import { useApp } from '../AppRoot';
 import { Card } from '../ui/Card';
 import { Heading } from '../ui/Heading';
 import { Padded } from '../ui/Padded';

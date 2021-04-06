@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useApp } from '../../data/AppProvider';
+import { useApp } from '../AppRoot';
 import { ServerIconButton } from './ServerIconButton';
 import { useTheme } from '../ui/layout/ThemeProvider';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,7 +7,7 @@ import { Box } from '../ui/Box';
 import { Tooltip } from '../ui/overlay/Tooltip';
 
 export const ServerList: React.FC<{}> = props => {
-  const { serverList, state, selectServer, createServer } = useApp();
+  const { serverList, state, selectServer, openView, view } = useApp();
   const theme = useTheme();
 
   return (
@@ -28,7 +28,7 @@ export const ServerList: React.FC<{}> = props => {
           <Tooltip content={server.name} key={server.id} positions={['right']}>
             <ServerIconButton
               color={server.color}
-              active={server.id === state.id}
+              active={server.id === state.id && view === undefined}
               onClick={() => selectServer(server.id)}
             >
               {server.initials}
@@ -38,8 +38,8 @@ export const ServerList: React.FC<{}> = props => {
         <Tooltip content="Create new Mocking Server" positions={['right']}>
           <ServerIconButton
             color={theme.colors.background}
-            active={false}
-            onClick={() => createServer()}
+            active={view === 'createServer'}
+            onClick={() => openView('createServer')}
           >
             <FontAwesomeIcon icon="plus" />
           </ServerIconButton>
@@ -49,7 +49,8 @@ export const ServerList: React.FC<{}> = props => {
         <Tooltip content="Settings" positions={['right']}>
           <ServerIconButton
             color={theme.colors.background}
-            active={false}
+            active={view === 'settings'}
+            onClick={() => openView('settings')}
           >
             <FontAwesomeIcon icon="cog" />
           </ServerIconButton>

@@ -2,13 +2,13 @@ import * as React from 'react';
 import { Link, matchPath, useLocation } from 'react-router-dom';
 import { RouteButton } from './RouteButton';
 import { MenuListItem } from './ui/layout/MenuListItem';
-import { useApp } from '../data/AppProvider';
+import { useApp } from './AppRoot';
 
 export const MenuBar: React.FC<{}> = props => {
   const { state, server } = useApp();
   const location = useLocation();
 
-  const routeMatch = matchPath(location.pathname, {
+  const routeMatch = matchPath(location?.pathname, {
     path: '/route/:routeId',
     exact: true
   });
@@ -36,7 +36,7 @@ export const MenuBar: React.FC<{}> = props => {
       <Link to="/documents">
         <MenuListItem
           icon="file-alt"
-          selected={!!matchPath(location.pathname, { path: '/documents', exact: true })}
+          selected={!!matchPath(location?.pathname, { path: '/documents', exact: true })}
         >
           Documents
         </MenuListItem>

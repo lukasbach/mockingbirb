@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { MockedHandlerDocumentRepeater, MockedHandlerLogic } from '../../data/types';
 import { CodeEditor } from '../ui/CodeEditor';
-import { useApp } from '../../data/AppProvider';
+import { useApp } from '../AppRoot';
 import { ScriptCodeEditor } from '../ui/ScriptCodeEditor';
 
 export const LogicHandlerEditor: React.FC<{

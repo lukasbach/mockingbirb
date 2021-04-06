@@ -4,7 +4,7 @@ import { Tag } from './ui/layout/Tag';
 import { View } from './View';
 import { MethodTag } from './ui/MethodTag';
 import { MockedRouteConfiguration } from '../data/types';
-import { useApp } from '../data/AppProvider';
+import { useApp } from './AppRoot';
 import { useMemo } from 'react';
 import ago from 's-ago';
 

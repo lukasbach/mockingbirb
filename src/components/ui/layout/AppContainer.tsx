@@ -52,15 +52,17 @@ export const AppContainer: React.FC<{
           overflow="auto"
           flex="1"
         >
-          <Box
-            backgroundColor={theme.colors.background2}
-            borderTopLeftRadius={theme.radius}
-            width="280px"
-            overflowX="auto"
-            overflowY="auto"
-          >
-            {props.menuContent}
-          </Box>
+          {props.menuContent && (
+            <Box
+              backgroundColor={theme.colors.background2}
+              borderTopLeftRadius={theme.radius}
+              width="280px"
+              overflowX="auto"
+              overflowY="auto"
+            >
+              {props.menuContent}
+            </Box>
+          )}
           <Box
             flexGrow={1}
             overflowX="auto"

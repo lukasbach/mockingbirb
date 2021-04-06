@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box } from '../ui/Box';
-import { useApp } from '../../data/AppProvider';
+import { useApp } from '../AppRoot';
 import { Card } from '../ui/Card';
 import { InputGroup } from '../ui/form/InputGroup';
 import { TextInput } from '../ui/form/TextInput';
