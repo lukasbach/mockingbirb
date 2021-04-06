@@ -7,6 +7,7 @@ import { Card } from '../ui/Card';
 import { LabelText } from '../ui/form/LabelText';
 import { useTheme } from '../ui/layout/ThemeProvider';
 import { AppHeader } from './AppHeader';
+import { Link } from 'react-router-dom';
 
 
 export const ServerAppHeader: React.FC<{}> = props => {
@@ -26,7 +27,7 @@ export const ServerAppHeader: React.FC<{}> = props => {
             as="h1"
             margin="18px 0 8px 0"
           >
-            {state.name}
+            {state.name || 'Unnamed Server Mock'}
           </Box>
         </Box>
         <Box
@@ -42,7 +43,7 @@ export const ServerAppHeader: React.FC<{}> = props => {
         </Box>
       </Box>
 
-      <Box display="flex">
+      <Box display="flex" alignItems="center">
         <Box display="inline-block" marginRight="10px" {...undraggable}>
           <Card noMarginBottom={true}>
             <Box display="inline-flex">
@@ -75,9 +76,11 @@ export const ServerAppHeader: React.FC<{}> = props => {
           </Card>
         </Box>
 
-        <Box {...undraggable}>
-          <Button icon="pencil-alt">Edit Server</Button>
-        </Box>
+        <Link to="/server-settings">
+          <Box {...undraggable}>
+            <Button icon="pencil-alt">Edit Server</Button>
+          </Box>
+        </Link>
       </Box>
     </AppHeader>
   );

@@ -9,6 +9,7 @@ import { AppHeader } from './header/AppHeader';
 import { HashRouter, Link, Switch, Route } from 'react-router-dom';
 import { MenuBar } from './MenuBar';
 import { ServerAppHeader } from './header/ServerAppHeader';
+import { ServerSettings } from './editors/ServerSettings';
 
 export const ServerApp: React.FC<{}> = props => {
   return (
@@ -35,6 +36,11 @@ export const ServerApp: React.FC<{}> = props => {
               exact={true}
               render={() => <DocumentList />}
             />
+          <Route
+            path="/server-settings"
+            exact={true}
+            render={() => <ServerSettings />}
+          />
         </AppContainer>
       </Switch>
     </HashRouter>

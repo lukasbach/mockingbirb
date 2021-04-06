@@ -1,8 +1,5 @@
 import {
-  MockDocument,
-  MockedHandler,
-  MockedHandlerDocumentRepeater, MockedHandlerLogic, MockedHandlerSmartDocumentRepeater,
-  MockedRouteConfiguration,
+  MockedHandlerDocumentRepeater,
   MockedServerConfiguration,
   RouteEvent,
 } from './types';
@@ -15,7 +12,6 @@ import { RequestHandler } from './RequestHandler';
 import { CodeVm } from './CodeVm';
 import { Serializer } from './serialization/Serializer';
 import { Server } from 'http';
-import { defaultCodeImplementation } from './defaultCodeImplementation';
 import { HandlerManager } from './HandlerManager';
 
 export const defaultMockServerState: MockedServerConfiguration = {
@@ -96,6 +92,14 @@ export class MockServer {
 
   public getState() {
     return this.state;
+  }
+
+  public updateState(updatedState: Partial<MockedServerConfiguration>) {
+    this.state = {
+      ...this.state,
+      ...updatedState
+    };
+    this.scheduleUpdate();
   }
 
   public setUpdateHandler(handler: (state: MockedServerConfiguration) => void) {

@@ -6,8 +6,9 @@ import { remote, app } from 'electron';
 import path from 'path';
 import { useMockServers } from './useMockServers';
 import { ServerApp } from './ServerApp';
-import { CreateServerPage } from './pages/CreateServerPage';
+import { CreateServerPage } from './pages/createServer/CreateServerPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
+import { NewServerConfig } from './pages/createServer/NewServerConfig';
 
 export interface AppState {
   state: MockedServerConfiguration;
@@ -15,9 +16,12 @@ export interface AppState {
   serverList: ServerListItem[];
   getRoute: (routeId: string) => MockedRouteConfiguration;
   selectServer: (id: string) => void;
-  createServer: () => Promise<void>;
+  createServer: (config: NewServerConfig) => Promise<void>;
+  addServer: (location: string) => Promise<void>;
   openView: (page: View) => void;
   view?: View;
+  removeServer: (id: string) => Promise<void>;
+  deleteServer: (id: string) => Promise<void>;
 }
 
 export type View = 'settings' | 'createServer';
@@ -29,15 +33,18 @@ export const AppStateContext = React.createContext<AppState>({
   getRoute: () => null as any,
   selectServer: () => null,
   createServer: async () => {},
+  addServer: async () => {},
   openView: () => {},
+  removeServer: async () => {},
+  deleteServer: async () => {},
 });
 export const useApp = () => useContext(AppStateContext);
 
 export const AppRoot: React.FC = ({children}) => {
   const [view, setView] = useState<View>();
   const {
-    serverList, setState, state, createServer, server, selectServer
-  } = useMockServers();
+    serverList, setState, state, createServer, server, selectServer, addServer, removeServer, deleteServer
+  } = useMockServers(setView);
 
   if (!state || !server) {
     return <CreateServerPage />;
@@ -53,6 +60,9 @@ export const AppRoot: React.FC = ({children}) => {
       },
       view,
       createServer,
+      addServer,
+      deleteServer,
+      removeServer,
       serverList,
       openView: setView,
       getRoute: routeId => {

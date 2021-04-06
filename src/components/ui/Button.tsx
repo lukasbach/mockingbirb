@@ -35,7 +35,7 @@ export const Button: React.FC<{
       flexDirection="row"
       position="relative"
       zIndex={100}
-      color={props.disabled ? theme.colors.muted : undefined}
+      color={props.disabled ? theme.colors.muted : theme.colors.text}
       elProps={{
         'aria-label': props.ariaDescription,
         'aria-disabled': props.disabled,
@@ -49,7 +49,6 @@ export const Button: React.FC<{
       active={props.disabled ? undefined : {
         // backgroundColor: props.primary ? theme.colors.text : theme.colors.primary,
         boxShadow: `0 0 0 3px ${props.primary ? theme.colors.primary : theme.colors.text}`,
-        color: props.primary ? theme.colors.background3 : undefined,
       }}
       {...getBorderRadii(props.borderRadius, theme)}
     >

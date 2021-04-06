@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button } from '../Button';
 import { Dialog, DialogProps } from './Dialog';
+import { Box } from '../Box';
 
 export type AlertProps = DialogProps & {
   cancelText?: string;
@@ -48,8 +49,10 @@ export const Alert: React.FC<AlertProps> = props => {
       }}
       {...props}
     >
-      {props.content}
-      {props.children}
+      <Box maxWidth="400px">
+        {props.content}
+        {props.children}
+      </Box>
     </Dialog>
   );
 };
