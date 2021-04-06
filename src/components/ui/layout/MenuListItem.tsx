@@ -28,6 +28,7 @@ export const MenuListItem: React.FC<{
       }}
       elProps={{ onClick: props.onClick, tabIndex: 1 }}
       display="flex"
+      color={theme.colors.text}
     >
       {props.icon && (
         <Box margin="0 8px">

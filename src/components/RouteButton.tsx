@@ -10,10 +10,9 @@ import ago from 's-ago';
 
 export const RouteButton: React.FC<{
   route: MockedRouteConfiguration,
-  view?: View,
-  onClick: () => void,
-  selectedRoute?: string
-}> = ({ route, view, selectedRoute, onClick }) => {
+  onClick?: () => void,
+  selected?: boolean
+}> = ({ route, selected, onClick }) => {
   const { state, server } = useApp();
 
   const [subtitle, counter] = useMemo(() => {
@@ -28,7 +27,7 @@ export const RouteButton: React.FC<{
       rightContent={<Tag background="background3">{counter}</Tag>}
       subtitle={subtitle}
       key={route.id}
-      selected={view === View.RouteConfig && route.id === selectedRoute}
+      selected={selected}
       onClick={onClick}
     >
       <MethodTag method={route.method} /> {route.route}
