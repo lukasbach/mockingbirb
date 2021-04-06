@@ -3,64 +3,50 @@ import { Card } from '../ui/Card';
 import { InputGroup } from '../ui/form/InputGroup';
 import { TextInput } from '../ui/form/TextInput';
 import { useApp } from '../AppRoot';
-import { Box } from '../ui/Box';
 import { Button } from '../ui/Button';
-import { useState } from 'react';
-import { useTheme } from '../ui/layout/ThemeProvider';
 import { CodeEditor } from '../ui/CodeEditor';
-import { Padded } from '../ui/Padded';
+import { BottomBorderItem } from '../BottomBorderItem';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const DocumentList: React.FC<{}> = props => {
-  const theme = useTheme();
   const {state} = useApp();
-  const [expandedDocument, setExpandedDocument] = useState<string>();
+  const [search, setSearch] = useState('');
+
+  const documents = Object.values(state.documents)
+    .filter(document => search.length === 0 || (document.name + document.content).toLowerCase().includes(search.toLowerCase()));
 
   return (
     <Card>
       <InputGroup>
         <TextInput
-          defaultValue="Search..."
+          placeholder="Search..."
+          value={search}
+          onChangeValue={setSearch}
         />
       </InputGroup>
 
-      {Object.values(state.documents).map((document, id) => (
-        <Box borderBottom={id !== Object.keys(state.documents).length - 1 ? `1px solid ${theme.colors.backgroundMenu}` : undefined}>
-          <Box
-            key={document.id}
-            display="flex"
-            alignItems="center"
-          >
-            <Box flexGrow={1} fontWeight="bold">
-              <Padded>
-                {document.name}
-              </Padded>
-            </Box>
-            <Box>
-              <Button
-                minimal={true}
-                embedded={true}
-                ariaDescription={'Edit'}
-                icon={'pencil-alt'}
-                onClick={() => {}}
-              />
-              <Button
-                minimal={true}
-                embedded={true}
-                ariaDescription={expandedDocument === document.id ? 'Collapse' : 'Peek'}
-                icon={expandedDocument === document.id ? 'chevron-up' : 'chevron-down'}
-                onClick={() => setExpandedDocument(expandedDocument === document.id ? undefined : document.id)}
-              />
-            </Box>
-          </Box>
-
-          {expandedDocument === document.id && (
-            <CodeEditor
-              value={document.content}
-              title="Document Contents"
-              collapsedDefaultValue={false}
-            />
-          )}
-        </Box>
+      {documents.map((document, id) => (
+        <BottomBorderItem hasBorder={id !== Object.keys(documents).length - 1} key={document.id}>
+          <CodeEditor
+            value={document.content}
+            title={document.name}
+            collapsedDefaultValue={true}
+            controls={(
+              <>
+                <Link to={`/documents/${document.id}`}>
+                  <Button
+                    minimal={true}
+                    embedded={true}
+                    ariaDescription={'Edit'}
+                    icon={'pencil-alt'}
+                    onClick={() => {}}
+                  />
+                </Link>
+              </>
+            )}
+          />
+        </BottomBorderItem>
       ))}
     </Card>
   );

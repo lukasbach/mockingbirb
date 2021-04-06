@@ -14,6 +14,7 @@ import { useMemo } from 'react';
 import { Padded } from '../ui/Padded';
 import { BottomBorderItem } from '../BottomBorderItem';
 import { ResponseStatus } from '../ui/ResponseStatus';
+import { Link } from 'react-router-dom';
 
 const HeaderCard: React.FC<{
   headers: object,
@@ -139,14 +140,16 @@ export const EventDetails: React.FC<{
             <BottomBorderItem hasBorder={true}>
               <LabelText>Returned Document</LabelText>
             </BottomBorderItem>
-            <Button
-              borderRadius={!responseDocument ? undefined : 'bl br'}
-              embedded={true}
-              fill={true}
-              minimal={true}
-            >
-              {responseDocument.name}
-            </Button>
+            <Link to={`/documents/${responseDocument.id}`}>
+              <Button
+                borderRadius={!responseDocument ? undefined : 'bl br'}
+                embedded={true}
+                fill={true}
+                minimal={true}
+              >
+                {responseDocument.name}
+              </Button>
+            </Link>
           </>
         )}
       </Card>
@@ -169,9 +172,11 @@ export const EventDetails: React.FC<{
         <>
           <Heading level={3}>Response Document</Heading>
           <Box as="p">A Mock-Document handler handled this request and returned the following document:</Box>
-          <Button>
-            {responseDocument.name}
-          </Button>
+          <Link to={`/documents/${responseDocument.id}`}>
+            <Button>
+              {responseDocument.name}
+            </Button>
+          </Link>
         </>
       )}
 

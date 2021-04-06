@@ -9,6 +9,7 @@ import { ServerAppHeader } from './header/ServerAppHeader';
 import { ServerSettings } from './editors/ServerSettings';
 import { RightBarContent } from './rightBar/RightBarContent';
 import { EventDetails } from './editors/EventDetails';
+import { DocumentEditor } from './editors/DocumentEditor';
 
 export const ServerApp: React.FC<{}> = props => {
   return (
@@ -29,6 +30,11 @@ export const ServerApp: React.FC<{}> = props => {
             path="/documents"
             exact={true}
             render={() => <DocumentList />}
+          />
+          <Route
+            path="/documents/:documentId"
+            exact={true}
+            render={({match}) => <DocumentEditor documentId={match.params.documentId} />}
           />
           <Route
             path="/server-settings"

@@ -18,6 +18,7 @@ export interface CodeEditorProps {
   onMount?: (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof monacoEditor) => void,
   onUnMount?: (editor: monaco.editor.IStandaloneCodeEditor, monaco: typeof monacoEditor) => void,
   controls?: JSX.Element;
+  language?: string;
 }
 
 export const CodeEditor: React.FC<CodeEditorProps> = props => {
@@ -71,7 +72,7 @@ export const CodeEditor: React.FC<CodeEditorProps> = props => {
             <MonacoEditor
               height={height}
               width={width}
-              language="javascript"
+              language={props.language ?? 'javascript'}
               theme="vs-dark"
               value={props.value}
               onChange={(value) => {
