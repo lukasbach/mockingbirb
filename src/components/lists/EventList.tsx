@@ -105,6 +105,7 @@ export const EventList: React.FC<{
           } else {
             return (
               <Tooltip
+                key={event.date + '_tooltip'}
                 fill={true}
                 content={(
                   <>

@@ -6,13 +6,13 @@ import { ServerList } from './serverlist/ServerList';
 import { EventList } from './lists/EventList';
 import { Heading } from './ui/Heading';
 import { AppHeader } from './header/AppHeader';
-import { MemoryRouter, Link, Switch, Route } from 'react-router-dom';
+import { HashRouter, Link, Switch, Route } from 'react-router-dom';
 import { MenuBar } from './MenuBar';
 import { ServerAppHeader } from './header/ServerAppHeader';
 
 export const ServerApp: React.FC<{}> = props => {
   return (
-    <MemoryRouter>
+    <HashRouter>
       <Switch>
         <AppContainer
           title={<ServerAppHeader />}
@@ -37,6 +37,6 @@ export const ServerApp: React.FC<{}> = props => {
             />
         </AppContainer>
       </Switch>
-    </MemoryRouter>
+    </HashRouter>
   );
 };

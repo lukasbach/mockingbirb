@@ -16,7 +16,7 @@ export const MenuBar: React.FC<{}> = props => {
   return (
     <>
       {state.routes.map(route => (
-        <Link to={`/route/${route.id}`}>
+        <Link to={`/route/${route.id}`} key={route.id}>
           <RouteButton
             route={route}
             selected={(routeMatch?.params as any)?.routeId === route.id}

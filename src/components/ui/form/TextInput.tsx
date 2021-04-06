@@ -8,6 +8,8 @@ export const TextInput = React.forwardRef<
   HTMLProps<HTMLInputElement> & { onChangeValue?: (value: string, e: ChangeEvent<HTMLInputElement>) => void }
 >((props, ref) => {
   const theme = useTheme();
+  const {onChangeValue, onChange, ...elProps} = props;
+
   return (
     <Box
       as="input"
@@ -21,11 +23,10 @@ export const TextInput = React.forwardRef<
       padding={theme.contentPadding}
       ref={ref}
       elProps={{
-        ...props,
-        onChangeValue: undefined,
+        ...elProps,
         onChange: (e: any) => {
-          props.onChangeValue?.(e.target.value, e);
-          props.onChange?.(e);
+          onChangeValue?.(e.target.value, e);
+          onChange?.(e);
         }
       } as any}
     />
