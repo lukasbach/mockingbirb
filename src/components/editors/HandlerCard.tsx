@@ -15,6 +15,7 @@ import { useMemo } from 'react';
 import { Tooltip } from '../ui/overlay/Tooltip';
 import { defaultCodeImplementation, defaultHandlerImplementation } from '../../data/defaultCodeImplementation';
 import { ScriptCodeEditor } from '../ui/ScriptCodeEditor';
+import { useAlert } from '../ui/overlay/useAlert';
 
 
 function moveItem<T>(array: T[], from: number, to: number) {
@@ -29,12 +30,14 @@ export const HandlerCard: React.FC<{
   routeId?: string
 }> = props => {
   const { server, state } = useApp();
+  const [alert, alertComponent] = useAlert();
   const route = useMemo(() => props.routeId ? state.routes.find(r => r.id === props.routeId) : undefined, [props.routeId, state]);
   const handler = state.handlers[props.handlerId];
   let indexInRoute = route ? route.handlers.indexOf(props.handlerId) : undefined;
 
   return (
     <>
+      { alertComponent }
       <Heading level={3}>{handler.name}</Heading>
       <Card>
         <BottomBorderItem hasBorder={true}>
@@ -127,7 +130,12 @@ export const HandlerCard: React.FC<{
                   embedded={true}
                   minimal={true}
                   onClick={() => {
-                    server.handlers.updateHandler(props.handlerId, { if: undefined })
+                    alert({
+                      content: 'Do you want to delete the condition code from the handler?',
+                      onOkay: () => {
+                        server.handlers.updateHandler(props.handlerId, { if: undefined });
+                      }
+                    });
                   }}
                 >
                   Remove Condition
