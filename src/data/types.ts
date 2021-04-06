@@ -28,10 +28,10 @@ export interface RouteEvent {
   route: string;
   handlers: string[];
   requestHeaders: object;
-  requestBody: string;
+  requestBody: any;
   requestMethod: string;
   responseHeaders: object;
-  responseBody: string;
+  responseBody: any;
   responseStatus: number;
   responseDocumentId?: string;
   date: number;

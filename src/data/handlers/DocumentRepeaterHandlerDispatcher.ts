@@ -16,6 +16,7 @@ export class DocumentRepeaterHandlerDispatcher implements HandlerDispatcher<Mock
 
   public async handle(handler: MockedHandlerDocumentRepeater, request: RequestData, params: object) {
     const { content, contentType } = this.state.documents[handler.documentId];
+    request.setDocumentId(handler.documentId);
     request.setResponseHeader('content-type', contentType);
     request.setStatus(200);
     request.sendTextBody(content);

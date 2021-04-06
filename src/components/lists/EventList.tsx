@@ -12,6 +12,9 @@ import { LabelText } from '../ui/form/LabelText';
 import ago from 's-ago';
 import { BottomBorderItem } from '../BottomBorderItem';
 import { Tooltip } from '../ui/overlay/Tooltip';
+import { Link } from 'react-router-dom';
+import { ResponseStatus } from '../ui/ResponseStatus';
+import { Padded } from '../ui/Padded';
 
 export const EventList: React.FC<{
   filter?: {
@@ -26,6 +29,7 @@ export const EventList: React.FC<{
 
   const events = useMemo(() => {
     return state.events
+      .map((e, id) => ({ ...e, id }))
       .filter(e => {
         if (props.filter) {
           if (props.filter.handler && !e.handlers.includes(props.filter.handler)) {
@@ -66,37 +70,39 @@ export const EventList: React.FC<{
               hasBorder={!isLast}
               key={event.date}
             >
-              <Button minimal={true} embedded={true} fill={true} borderRadius={isLast ? 'bl br' : undefined}>
-                <Box
-                  display="flex"
-                  fontWeight="bold"
-                  alignItems="center"
-                  flexWrap="wrap"
-                  width="100%"
-                >
-                  <Box marginRight="6px">
-                    <MethodTag method={event.requestMethod} />
-                  </Box>
+              <Link to={`/events/${event.id}`}>
+                <Button minimal={true} embedded={true} fill={true} borderRadius={isLast ? 'bl br' : undefined}>
                   <Box
-                    flex="1"
-                    textAlign="left"
-                    whiteSpace="nowrap"
-                    overflow="hidden"
-                    textOverflow="ellipsis"
-                    color={theme.colors.muted}
+                    display="flex"
+                    fontWeight="bold"
+                    alignItems="center"
+                    flexWrap="wrap"
+                    width="100%"
                   >
-                    {event.path}
-                  </Box>
-                  {props.wide && (
-                    <Box marginLeft="10px" color={theme.colors.muted} fontWeight="normal">
-                      { ago(new Date(event.date)) }
+                    <Box marginRight="6px">
+                      <MethodTag method={event.requestMethod} />
                     </Box>
-                  )}
-                  <Box marginLeft="10px" color={event.responseStatus === 200 ? theme.colors.green : theme.colors.red}>
-                    { event.responseStatus }
+                    <Box
+                      flex="1"
+                      textAlign="left"
+                      whiteSpace="nowrap"
+                      overflow="hidden"
+                      textOverflow="ellipsis"
+                      color={theme.colors.muted}
+                    >
+                      {event.path}
+                    </Box>
+                    {props.wide && (
+                      <Box marginLeft="10px" color={theme.colors.muted} fontWeight="normal">
+                        { ago(new Date(event.date)) }
+                      </Box>
+                    )}
+                    <Box marginLeft="10px">
+                      <ResponseStatus status={event.responseStatus} />
+                    </Box>
                   </Box>
-                </Box>
-              </Button>
+                </Button>
+              </Link>
             </BottomBorderItem>
           );
 

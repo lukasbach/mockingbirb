@@ -8,6 +8,7 @@ import { MenuBar } from './MenuBar';
 import { ServerAppHeader } from './header/ServerAppHeader';
 import { ServerSettings } from './editors/ServerSettings';
 import { RightBarContent } from './rightBar/RightBarContent';
+import { EventDetails } from './editors/EventDetails';
 
 export const ServerApp: React.FC<{}> = props => {
   return (
@@ -19,20 +20,25 @@ export const ServerApp: React.FC<{}> = props => {
           right={<RightBarContent />}
           menuContent={<MenuBar />}
         >
-            <Route
-              path="/route/:routeId"
-              exact={true}
-              render={({ match }) => <RouteEditor routeId={ match.params.routeId } />}
-            />
-            <Route
-              path="/documents"
-              exact={true}
-              render={() => <DocumentList />}
-            />
+          <Route
+            path="/route/:routeId"
+            exact={true}
+            render={({ match }) => <RouteEditor routeId={ match.params.routeId } />}
+          />
+          <Route
+            path="/documents"
+            exact={true}
+            render={() => <DocumentList />}
+          />
           <Route
             path="/server-settings"
             exact={true}
             render={() => <ServerSettings />}
+          />
+          <Route
+            path="/events/:eventId"
+            exact={true}
+            render={({ match }) => <EventDetails eventId={parseInt(match.params.eventId)} />}
           />
         </AppContainer>
       </Switch>

@@ -8,10 +8,10 @@ export class RequestData {
   private _params?: object;
   private _handlers: string[];
   private readonly _requestHeaders: object;
-  private readonly _requestBody: string;
+  private readonly _requestBody: any;
   private readonly _requestMethod: string;
   private _responseHeaders: any;
-  private _responseBody?: string;
+  private _responseBody?: any;
   private _responseStatus?: number;
   private _responseDocumentId?: string;
   private readonly _date: number;
@@ -122,7 +122,7 @@ export class RequestData {
       requestBody: this._requestBody,
       requestHeaders: this._requestHeaders,
       requestMethod: this._requestMethod,
-      responseBody: this._requestBody,
+      responseBody: this._responseBody,
       responseHeaders: this._responseHeaders,
       responseStatus: this._responseStatus!,
       responseDocumentId: this._responseDocumentId,
