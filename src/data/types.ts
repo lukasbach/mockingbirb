@@ -9,7 +9,7 @@ export interface MockedServerConfiguration {
   initials: string;
   color: string;
   port: number;
-  env: object;
+  env: { [key: string]: string };
   isRunning: boolean;
   routes: MockedRouteConfiguration[];
   documents: TypedObject<string, MockDocument>;

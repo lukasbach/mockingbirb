@@ -44,7 +44,8 @@ export const ScriptCodeEditor: React.FC<{
         let libSource = scriptTypes; //.replace(/contextTypes/g, 'mockingbirb');
         libSource += `\n\ndeclare module 'mockingbirb' {\n`;
         libSource += `  import { RequestData } from 'RequestData';\n`;
-        libSource += `  declare function run(handler: (request: RequestData) => ${returnType} | Promise<${returnType}>): void;\n`;
+        libSource += `  import { MockedServerConfiguration } from 'types';\n`;
+        libSource += `  declare function run(handler: (request: RequestData, server: MockedServerConfiguration) => ${returnType} | Promise<${returnType}>): void;\n`;
         libSource += `}\n`;
         monaco.languages.typescript.javascriptDefaults.addExtraLib(libSource, libUri);
         monaco.editor.createModel(libSource, 'typescript', monaco.Uri.parse(libUri));

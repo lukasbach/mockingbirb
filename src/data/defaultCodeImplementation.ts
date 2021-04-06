@@ -1,7 +1,7 @@
 export const defaultCodeImplementation = [
   'import {run} from \'mockingbirb\'',
   '',
-  'run(request => {',
+  'run((request, server) => {',
   '',
   '})',
 ].join('\n');
@@ -9,7 +9,7 @@ export const defaultCodeImplementation = [
 export const defaultHandlerImplementation = [
   'import {run} from \'mockingbirb\'',
   '',
-  'run(request => {',
+  'run((request, server) => {',
   '  return true',
   '})',
 ].join('\n');

@@ -45,7 +45,7 @@ export const RouteEditor: React.FC<{
         </LabelText>
         <Box display="flex">
           <Box width="140px">
-            <InputGroup>
+            <InputGroup borderRadius="bl">
               <SelectInput
                 value={routeConfig.method.toUpperCase()}
                 onChangeValue={v => server.routes.updateRoute(props.routeId, { method: v.toLowerCase() })}
@@ -70,9 +70,9 @@ export const RouteEditor: React.FC<{
             </InputGroup>
           </Box>
           <Box flexGrow={1}>
-            <InputGroup>
+            <InputGroup borderRadius="br">
               <TextInput
-                placeholder="Placeholder"
+                placeholder="Route"
                 value={routeConfig.route}
                 onChangeValue={(v) => {
                   server.routes.updateRoute(props.routeId, { route: v })
@@ -87,7 +87,7 @@ export const RouteEditor: React.FC<{
       <Popover positions={['bottom']} content={(
         <Menu>
           <MenuItem text="Mock Document" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'repeater')} />
-          <MenuItem text="Mock multiple Documents" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'smartrepeater')} />
+          {/*<MenuItem text="Mock multiple Documents" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'smartrepeater')} />*/}
           <MenuItem text="Custom Handler" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'logic')} />
         </Menu>
       )}>
