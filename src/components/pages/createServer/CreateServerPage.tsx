@@ -14,6 +14,7 @@ import { useAlert } from '../../ui/overlay/useAlert';
 import { useApp } from '../../AppRoot';
 import { LocalPathInput } from '../../ui/form/LocalPathInput';
 import { Card } from '../../ui/Card';
+import { Box } from '../../ui/Box';
 
 const defaultLocation = path.join(remote.app.getPath('desktop'), 'New Birb');
 
@@ -42,61 +43,63 @@ export const CreateServerPage: React.FC<{}> = props => {
       left={<ServerList />}
     >
       {alert}
-      <Tabs>
-        <Tab name="Create new Server">
-          <NewServerConfigCard
-            config={newServerConfig}
-            onChange={c => setNewServerConfig(old => ({...old, ...c}))}
-          />
-          <Button onClick={async () => {
-            if (!isFolderEmpty(newServerConfig.location)) {
-              await openAlert({
-                canCancel: false,
-                content: 'The target folder exists and is not empty! Please make sure to choose a directory that does not exist yet or is empty.'
-              });
-              return;
-            }
-
-            try {
-              await createServer(newServerConfig);
-            } catch(e) {
-              await openAlert({
-                canCancel: false,
-                content: 'The server could not be added: ' + e.message
-              });
-            }
-          }}>
-            Create
-          </Button>
-        </Tab>
-
-        <Tab name="Add Server from Local Disk">
-          <Card>
-            <LocalPathInput
-              value={addServerLocation}
-              onChange={setAddServerLocation}
-              label="Location on disk"
-              dialog={{
-                properties: ['createDirectory', 'openDirectory']
-              }}
-              isBottomOfCard={true}
-              isTopOfCard={true}
+      <Box maxWidth="600px">
+        <Tabs>
+          <Tab name="Create new Server">
+            <NewServerConfigCard
+              config={newServerConfig}
+              onChange={c => setNewServerConfig(old => ({...old, ...c}))}
             />
-          </Card>
-          <Button onClick={async () => {
-            try {
-              await addServer(addServerLocation);
-            } catch(e) {
-              await openAlert({
-                canCancel: false,
-                content: 'The server could not be added: ' + e.message
-              });
-            }
-          }}>
-            Add Server
-          </Button>
-        </Tab>
-      </Tabs>
+            <Button onClick={async () => {
+              if (!isFolderEmpty(newServerConfig.location)) {
+                await openAlert({
+                  canCancel: false,
+                  content: 'The target folder exists and is not empty! Please make sure to choose a directory that does not exist yet or is empty.'
+                });
+                return;
+              }
+
+              try {
+                await createServer(newServerConfig);
+              } catch(e) {
+                await openAlert({
+                  canCancel: false,
+                  content: 'The server could not be added: ' + e.message
+                });
+              }
+            }}>
+              Create
+            </Button>
+          </Tab>
+
+          <Tab name="Add Server from Local Disk">
+            <Card>
+              <LocalPathInput
+                value={addServerLocation}
+                onChange={setAddServerLocation}
+                label="Location on disk"
+                dialog={{
+                  properties: ['createDirectory', 'openDirectory']
+                }}
+                isBottomOfCard={true}
+                isTopOfCard={true}
+              />
+            </Card>
+            <Button onClick={async () => {
+              try {
+                await addServer(addServerLocation);
+              } catch(e) {
+                await openAlert({
+                  canCancel: false,
+                  content: 'The server could not be added: ' + e.message
+                });
+              }
+            }}>
+              Add Server
+            </Button>
+          </Tab>
+        </Tabs>
+      </Box>
     </AppContainer>
   );
 };

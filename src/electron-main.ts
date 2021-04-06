@@ -6,8 +6,11 @@ console.log('process.env.NODE_ENV=', process.env.NODE_ENV);
 
 app.on('ready', () => {
   let mainWindow: Electron.BrowserWindow | null = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
+    minWidth: 800,
+    minHeight: 450,
+    backgroundColor: '#121213',
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,

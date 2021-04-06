@@ -16,10 +16,12 @@ import { Padded } from '../ui/Padded';
 import { HandlerCard } from './HandlerCard';
 import { EventList } from '../lists/EventList';
 import { BottomBorderItem } from '../BottomBorderItem';
+import { useAlert } from '../ui/overlay/useAlert';
 
 export const RouteEditor: React.FC<{
   routeId: string
 }> = props => {
+  const [openAlert, alert] = useAlert();
   const { getRoute, server, state } = useApp();
   const routeConfig = getRoute(props.routeId);
 
@@ -31,6 +33,7 @@ export const RouteEditor: React.FC<{
 
   return (
     <>
+      {alert}
       <Heading level={1}>Route Configuration</Heading>
       <Card>
         <LabelText>
@@ -112,7 +115,15 @@ export const RouteEditor: React.FC<{
               embedded={true}
               borderRadius="tr br"
               icon="trash-alt"
-              onClick={() => server.routes.deleteRoute(props.routeId)}
+              onClick={() => {
+                openAlert({
+                  content: 'Are you sure you want to delete the route?',
+                  okayText: 'Delete',
+                  onOkay: () => {
+                    server.routes.deleteRoute(props.routeId);
+                  }
+                })
+              }}
             >
               Delete
             </Button>

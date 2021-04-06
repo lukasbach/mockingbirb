@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { Box } from '../Box';
 import { useTheme } from './ThemeProvider';
+import { useEffect, useState } from 'react';
+import { Heading } from '../Heading';
+
+const WIDE_THRESHOLD = 1300;
 
 export const AppContainer: React.FC<{
   menuContent?: JSX.Element;
@@ -9,6 +13,20 @@ export const AppContainer: React.FC<{
   right?: JSX.Element;
 }> = props => {
   const theme = useTheme();
+  const [wide, setWide] = useState(true);
+
+  useEffect(() => {
+    const listener = () => {
+      if (document.body.clientWidth < WIDE_THRESHOLD && wide) {
+        setWide(false);
+      } else if (document.body.clientWidth >= WIDE_THRESHOLD && !wide) {
+        setWide(true);
+      }
+    };
+    listener();
+    window.addEventListener('resize', listener);
+    return () => window.removeEventListener('resize', listener);
+  }, [wide]);
 
   const draggable = {
     ['-webkit-app-region']: 'drag',
@@ -72,8 +90,14 @@ export const AppContainer: React.FC<{
             minWidth="0"
           >
             {props.children}
+            {props.right && !wide && (
+              <Box marginTop="100px">
+                <Heading level={1}>More</Heading>
+                {props.right}
+              </Box>
+            )}
           </Box>
-          {props.right && (
+          {props.right && wide && (
             <Box
               overflowX="auto"
               overflowY="auto"
