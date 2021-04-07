@@ -24,7 +24,10 @@ export const MenuItem: React.FC<{
       borderRadius={theme.radius}
       padding="8px 12px"
       elProps={{
-        onClick: props.onClick
+        onMouseUp: () => {
+          // TODO fixes weird issue with SearchSelect in Alert. Fix maybe?
+          props.onClick?.();
+        },
       }}
     >
       <Box

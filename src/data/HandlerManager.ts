@@ -30,6 +30,11 @@ export class HandlerManager {
   }
   public deleteHandler(id: string) {
     delete this.state.handlers[id];
+    for (const route of this.state.routes) {
+      if (route.handlers.includes(id)) {
+        route.handlers = route.handlers.filter(handlerId => handlerId !== id);
+      }
+    }
     this.server.scheduleUpdate();
   }
   public initializeNewHandlerFor(routeId: string, handlerType: string) {

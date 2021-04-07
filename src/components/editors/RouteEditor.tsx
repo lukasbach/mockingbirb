@@ -17,6 +17,8 @@ import { HandlerCard } from './HandlerCard';
 import { EventList } from '../lists/EventList';
 import { BottomBorderItem } from '../BottomBorderItem';
 import { useAlert } from '../ui/overlay/useAlert';
+import { Fragment } from 'react';
+import { ChooseHandlerButton } from './ChooseHandlerButton';
 
 export const RouteEditor: React.FC<{
   routeId: string
@@ -94,11 +96,20 @@ export const RouteEditor: React.FC<{
           <MenuItem text="Custom Handler" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'logic')} />
         </Menu>
       )}>
-        <Button>Add Handler</Button>
+        <Button>Create new Handler</Button>
       </Popover>
+      <ChooseHandlerButton
+        label="Add existing Handler"
+        onChoose={(handlerId) => {
+          server.routes.updateRoute(props.routeId, { handlers: [...routeConfig.handlers, handlerId] });
+        }}
+      />
 
       {routeConfig.handlers.map(handlerId => (
-        <HandlerCard handlerId={ handlerId } key={handlerId} routeId={props.routeId}/>
+        <Fragment key={handlerId}>
+          <Heading level={3}>{state.handlers[handlerId].name}</Heading>
+          <HandlerCard handlerId={ handlerId } routeId={props.routeId}/>
+        </Fragment>
       ))}
 
       <Heading level={1}>Actions</Heading>

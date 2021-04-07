@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { Box } from '../Box';
-import { useTheme } from '../layout/ThemeProvider';
+import { ColorName, useTheme } from '../layout/ThemeProvider';
 import { useRef, useState } from 'react';
 import { BorderRadiusShorthand, getBorderRadii } from '../borderRadiusShorthand';
 
-export const InputGroup: React.FC<{
+export interface InputGroupProps {
   borderRadius?: BorderRadiusShorthand;
-}> = props => {
+  background?: ColorName;
+}
+
+export const InputGroup: React.FC<InputGroupProps> = props => {
   const theme = useTheme();
   const ref = useRef<HTMLDivElement>(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -16,7 +19,7 @@ export const InputGroup: React.FC<{
       focusWithin={{
         boxShadow: `0 0 0 3px ${theme.colors.primary}`
       }}
-      backgroundColor={theme.colors.background3}
+      backgroundColor={(props.background ? theme.colors[props.background] : theme.colors.background3) as string}
       position="relative"
       zIndex={isFocused ? 200 : 100}
       overflow="hidden"

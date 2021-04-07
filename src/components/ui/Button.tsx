@@ -18,7 +18,7 @@ export const Button: React.FC<{
 } & HTMLProps<HTMLButtonElement>> = props => {
   const theme = useTheme();
 
-  const {ariaDescription, minimal, embedded, fill, borderRadius, ...elProps} = props;
+  const {ariaDescription, minimal, embedded, fill, borderRadius, primary, ...elProps} = props;
 
   return (
     <Box

@@ -38,7 +38,6 @@ export const HandlerCard: React.FC<{
   return (
     <>
       { alertComponent }
-      <Heading level={3}>{handler.name}</Heading>
       <Card>
         <BottomBorderItem hasBorder={true}>
           <Box display="flex">
@@ -95,6 +94,24 @@ export const HandlerCard: React.FC<{
                   embedded={true}
                   minimal={true}
                   borderRadius={handler.if ? 'tr' : undefined}
+                  onClick={() => {
+                    alert({
+                      okayText: 'Remove from Route',
+                      cancelText: 'Delete Handler',
+                      content: 'Do you just want to remove the handler from the Route or do you want to delete it completely? Deleting it will also make it unavailable for other routes.',
+                      onOkay: () => {
+                        server.handlers.deleteHandler(handler.id);
+                      },
+                      onCancel: () => {
+                        if (route) {
+                          server.routes.updateRoute(route.id, { handlers: route.handlers.filter(h => h !== handler.id) });
+                        }
+                      },
+                      closeButton: false,
+                      closeOnBackdrop: false,
+                      closeOnEscape: false,
+                    })
+                  }}
                 />
               </Tooltip>
               {!handler.if && (

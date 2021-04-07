@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Popover } from '../overlay/Popover';
 import { useRef, useState } from 'react';
-import { InputGroup } from './InputGroup';
+import { InputGroup, InputGroupProps } from './InputGroup';
 import { TextInput } from './TextInput';
 import { Menu } from '../menu/Menu';
 import { MenuItem } from '../menu/MenuItem';
@@ -15,6 +15,7 @@ export const SearchSelect: React.FC<{
   onChange: (value: string) => void;
   value?: string;
   fill?: boolean;
+  inputGroupProps?: InputGroupProps;
 }> = props => {
   const theme = useTheme();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -65,7 +66,7 @@ export const SearchSelect: React.FC<{
         </Menu>
       }
     >
-      <InputGroup>
+      <InputGroup {...props.inputGroupProps}>
         <TextInput
           onFocus={() => {
             setOpen(true);
