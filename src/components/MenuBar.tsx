@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { Link, matchPath, useLocation } from 'react-router-dom';
+import { Link, matchPath, useHistory, useLocation } from 'react-router-dom';
 import { RouteButton } from './RouteButton';
 import { MenuListItem } from './ui/layout/MenuListItem';
 import { useApp } from './AppRoot';
 
 export const MenuBar: React.FC<{}> = props => {
   const { state, server } = useApp();
+  const history = useHistory();
   const location = useLocation();
 
   const routeMatch = matchPath(location?.pathname, {
@@ -27,6 +28,7 @@ export const MenuBar: React.FC<{}> = props => {
       <MenuListItem
         onClick={() => {
           const id = server.routes.createRoute({ route: '/*', method: 'ALL', handlers: [] });
+          history.push(`/route/${id}`);
         }}
         icon="plus"
       >

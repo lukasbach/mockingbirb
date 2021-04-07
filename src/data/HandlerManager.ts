@@ -37,15 +37,16 @@ export class HandlerManager {
     }
     this.server.scheduleUpdate();
   }
-  public initializeNewHandlerFor(routeId: string, handlerType: string) {
+  public initializeNewHandlerFor(routeId: string | undefined, handlerType: string) {
     let handlerId;
-    const routeConfig = this.server.routes.getRoute(routeId);
+    const routeConfig = routeId ? this.server.routes.getRoute(routeId) : undefined;
+    const getName = (handlerType: string) => routeConfig ? `${handlerType} for ${routeConfig.route}` : `New ${handlerType}`;
 
     switch (handlerType) {
       case 'repeater':
         handlerId = this.createHandler({
           type: 'repeater',
-          name: `Document Repeater for ${routeConfig.route}`,
+          name: getName('Document Repeater'),
           documentId: '',
           status: 200,
         } as Omit<MockedHandlerDocumentRepeater, 'id'>);
@@ -53,14 +54,14 @@ export class HandlerManager {
       case 'smartrepeater':
         handlerId = this.createHandler({
           type: 'smartrepeater',
-          name: `Smart Document Repeater for ${routeConfig.route}`,
+          name: getName('Smart Document Repeater'),
           documents: [],
         } as Omit<MockedHandlerSmartDocumentRepeater, 'id'>);
         break;
       case 'logic':
         handlerId = this.createHandler({
           type: 'logic',
-          name: `Logic Handler for ${routeConfig.route}`,
+          name: getName('Logic Handler'),
           code: defaultCodeImplementation,
           status: 200,
         } as Omit<MockedHandlerLogic, 'id'>);
@@ -69,8 +70,10 @@ export class HandlerManager {
         throw Error(`Unknown handler type ${handlerType}`);
     }
 
-    this.server.routes.updateRoute(routeId, {
-      handlers: [...routeConfig.handlers, handlerId]
-    });
+    if (routeConfig && routeId) {
+      this.server.routes.updateRoute(routeId, {
+        handlers: [...routeConfig.handlers, handlerId]
+      });
+    }
   }
 }

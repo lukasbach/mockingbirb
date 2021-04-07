@@ -19,6 +19,7 @@ import { BottomBorderItem } from '../BottomBorderItem';
 import { useAlert } from '../ui/overlay/useAlert';
 import { Fragment } from 'react';
 import { ChooseHandlerButton } from './ChooseHandlerButton';
+import { Redirect } from 'react-router-dom';
 
 export const RouteEditor: React.FC<{
   routeId: string
@@ -28,7 +29,9 @@ export const RouteEditor: React.FC<{
   const routeConfig = getRoute(props.routeId);
 
   if (!routeConfig) {
-    return null;
+    return (
+      <Redirect to="/" />
+    );
   }
 
   console.log("Update ", routeConfig.route)

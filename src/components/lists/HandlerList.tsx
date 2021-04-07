@@ -14,10 +14,14 @@ import { Tag } from '../ui/layout/Tag';
 import { Link } from 'react-router-dom';
 import { MethodTag } from '../ui/MethodTag';
 import { Tooltip } from '../ui/overlay/Tooltip';
+import { Heading } from '../ui/Heading';
+import { Popover } from '../ui/overlay/Popover';
+import { Menu } from '../ui/menu/Menu';
+import { MenuItem } from '../ui/menu/MenuItem';
 
 export const HandlerList: React.FC<{}> = props => {
   const theme = useTheme();
-  const {state} = useApp();
+  const {state, server} = useApp();
   const [search, setSearch] = useState('');
   const [expandedHandler, setExpandedHandler] = useState<string>();
 
@@ -28,13 +32,35 @@ export const HandlerList: React.FC<{}> = props => {
 
   return (
     <Card>
-      <InputGroup>
-        <TextInput
-          placeholder="Search..."
-          value={search}
-          onChangeValue={setSearch}
-        />
-      </InputGroup>
+      <Box display="flex">
+        <Box flexGrow={1}>
+          <InputGroup borderRadius="tl">
+            <TextInput
+              placeholder="Search..."
+              value={search}
+              onChangeValue={setSearch}
+            />
+          </InputGroup>
+        </Box>
+        <Box>
+          <Popover positions={['bottom']} content={(
+            <Menu>
+              <MenuItem text="Mock Document" onClick={() => server.handlers.initializeNewHandlerFor(undefined, 'repeater')} />
+              {/*<MenuItem text="Mock multiple Documents" onClick={() => server.handlers.initializeNewHandlerFor(props.routeId, 'smartrepeater')} />*/}
+              <MenuItem text="Custom Handler" onClick={() => server.handlers.initializeNewHandlerFor(undefined, 'logic')} />
+            </Menu>
+          )}>
+            <Button
+              borderRadius="tr"
+              embedded={true}
+              icon="plus"
+              primary={true}
+            >
+              Create Handler
+            </Button>
+          </Popover>
+        </Box>
+      </Box>
 
       {handlers.map((handler, id) => (
         <BottomBorderItem hasBorder={id !== Object.keys(handlers).length - 1} key={handler.id}>
