@@ -1,7 +1,7 @@
 {
-  "name": "retypetron-starter",
-  "version": "1.0.0",
-  "description": "Minimalistic React + TypeScript + Electron Boilerplate. Nothing more.",
+  "name": "mockingbirb",
+  "version": "1.0.1",
+  "description": "Desktop app for configuring HTTP mocking servers",
   "main": "app/electron-main.js",
   "scripts": {
     "build:renderer:prod": "cross-env NODE_ENV=production webpack --config webpack-renderer.config.ts --mode production",
@@ -19,7 +19,11 @@
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write ."
   },
-  "author": "Lukas Bach",
+  "author": {
+    "name": "Lukas Bach",
+    "url": "https://lukasbach.com",
+    "email": "lbach@outlook.de"
+  },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -75,5 +79,9 @@
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukasbach/mockingbirb.git"
   }
 }

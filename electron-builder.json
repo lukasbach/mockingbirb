@@ -1,20 +1,24 @@
 {
   "$schema": "http://json.schemastore.org/electron-builder",
-  "appId": "com.retypetron.starter",
-  "productName": "Retypetron Starter",
-  "copyright": "Copyright (c) 2020 ${author}",
+  "appId": "com.mockingbirb.desktopapp",
+  "productName": "Mockingbirb",
+  "copyright": "Copyright (c) 2020 Lukas Bach",
   "files": ["app/**/*", "node_modules/", "index.html"],
   "directories": {
     "output": "./out",
     "buildResources": "./resources"
   },
   "win": {
-    "target": ["nsis", "msi", "zip"]
+    "target": ["nsis", "zip"],
+    "publish": ["github"]
   },
   "linux": {
-    "target": ["snap", "deb", "tar.gz"]
+    "target": ["snap", "deb", "zip", "AppImage"],
+    "publish": ["github"]
   },
   "mac": {
-    "target": ["dmg", "zip"]
+    "target": ["dmg", "zip"],
+    "publish": ["github"],
+    "category": "public.app-category.utilities"
   }
 }
