@@ -41,6 +41,15 @@ export const MenuBar: React.FC<{}> = props => {
           Documents
         </MenuListItem>
       </Link>
+
+      <Link to="/handlers">
+        <MenuListItem
+          icon="code"
+          selected={!!matchPath(location?.pathname, { path: '/handlers', exact: true })}
+        >
+          Handlers
+        </MenuListItem>
+      </Link>
     </>
   );
 };

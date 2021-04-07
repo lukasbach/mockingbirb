@@ -10,6 +10,8 @@ import { ServerSettings } from './editors/ServerSettings';
 import { RightBarContent } from './rightBar/RightBarContent';
 import { EventDetails } from './editors/EventDetails';
 import { DocumentEditor } from './editors/DocumentEditor';
+import { HandlerList } from './lists/HandlerList';
+import { HandlerEditor } from './editors/HandlerEditor';
 
 export const ServerApp: React.FC<{}> = props => {
   return (
@@ -45,6 +47,16 @@ export const ServerApp: React.FC<{}> = props => {
             path="/events/:eventId"
             exact={true}
             render={({ match }) => <EventDetails eventId={parseInt(match.params.eventId)} />}
+          />
+          <Route
+            path="/handlers"
+            exact={true}
+            render={() => <HandlerList />}
+          />
+          <Route
+            path="/handlers/:handlerId"
+            exact={true}
+            render={({ match }) => <HandlerEditor handlerId={match.params.handlerId} />}
           />
         </AppContainer>
       </Switch>

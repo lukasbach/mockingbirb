@@ -16,6 +16,7 @@ import { Tooltip } from '../ui/overlay/Tooltip';
 import { defaultCodeImplementation, defaultHandlerImplementation } from '../../data/defaultCodeImplementation';
 import { ScriptCodeEditor } from '../ui/ScriptCodeEditor';
 import { useAlert } from '../ui/overlay/useAlert';
+import { Link } from 'react-router-dom';
 
 
 function moveItem<T>(array: T[], from: number, to: number) {
@@ -27,7 +28,8 @@ function moveItem<T>(array: T[], from: number, to: number) {
 
 export const HandlerCard: React.FC<{
   handlerId: string,
-  routeId?: string
+  routeId?: string,
+  showEditLink?: boolean,
 }> = props => {
   const { server, state } = useApp();
   const [alert, alertComponent] = useAlert();
@@ -81,13 +83,17 @@ export const HandlerCard: React.FC<{
                   </Tooltip>
                 </>
               )}
-              <Tooltip content="Edit Handler">
-                <Button
-                  icon="pencil-alt"
-                  embedded={true}
-                  minimal={true}
-                />
-              </Tooltip>
+              {props.showEditLink && (
+                <Tooltip content="Edit Handler">
+                  <Link to={`/handlers/${handler.id}`}>
+                    <Button
+                      icon="pencil-alt"
+                      embedded={true}
+                      minimal={true}
+                    />
+                  </Link>
+                </Tooltip>
+              )}
               <Tooltip content="Delete Handler">
                 <Button
                   icon="trash-alt"
@@ -95,22 +101,33 @@ export const HandlerCard: React.FC<{
                   minimal={true}
                   borderRadius={handler.if ? 'tr' : undefined}
                   onClick={() => {
-                    alert({
-                      okayText: 'Remove from Route',
-                      cancelText: 'Delete Handler',
-                      content: 'Do you just want to remove the handler from the Route or do you want to delete it completely? Deleting it will also make it unavailable for other routes.',
-                      onOkay: () => {
-                        server.handlers.deleteHandler(handler.id);
-                      },
-                      onCancel: () => {
-                        if (route) {
-                          server.routes.updateRoute(route.id, { handlers: route.handlers.filter(h => h !== handler.id) });
-                        }
-                      },
-                      closeButton: false,
-                      closeOnBackdrop: false,
-                      closeOnEscape: false,
-                    })
+                    if (route) {
+                      alert({
+                        okayText: 'Remove from Route',
+                        cancelText: 'Delete Handler',
+                        content: 'Do you just want to remove the handler from the Route or do you want to delete it completely? Deleting it will also make it unavailable for other routes.',
+                        onOkay: () => {
+                          server.handlers.deleteHandler(handler.id);
+                        },
+                        onCancel: () => {
+                          if (route) {
+                            server.routes.updateRoute(route.id, { handlers: route.handlers.filter(h => h !== handler.id) });
+                          }
+                        },
+                        closeButton: false,
+                        closeOnBackdrop: false,
+                        closeOnEscape: false,
+                      });
+                    } else {
+                      alert({
+                        okayText: 'Delete',
+                        cancelText: 'Cancel',
+                        content: 'Are you sure you want to delete the Handler? Deleting it will also remove it from all routes.',
+                        onOkay: () => {
+                          server.handlers.deleteHandler(handler.id);
+                        },
+                      });
+                    }
                   }}
                 />
               </Tooltip>

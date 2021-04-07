@@ -108,7 +108,7 @@ export const RouteEditor: React.FC<{
       {routeConfig.handlers.map(handlerId => (
         <Fragment key={handlerId}>
           <Heading level={3}>{state.handlers[handlerId].name}</Heading>
-          <HandlerCard handlerId={ handlerId } routeId={props.routeId}/>
+          <HandlerCard handlerId={ handlerId } routeId={props.routeId} showEditLink={true}/>
         </Fragment>
       ))}
 
