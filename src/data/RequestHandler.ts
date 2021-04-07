@@ -31,7 +31,7 @@ export class RequestHandler {
     const routesSorted = this.state.routes.sort((a, b) => b.route.length - a.route.length);
 
     for (const route of routesSorted) {
-      requestData.setMatchedRoute(route.route);
+      requestData.setMatchedRoute(route.route, route.id);
       const match = this.pathMatcher(route.route)(path);
       if (match !== false && (route.method.toLowerCase() === 'all' || route.method.toLowerCase() === method.toLowerCase())) {
         console.log(`Route ${route.route} matched ${path}`);

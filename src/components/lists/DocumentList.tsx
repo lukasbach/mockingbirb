@@ -8,6 +8,8 @@ import { CodeEditor } from '../ui/CodeEditor';
 import { BottomBorderItem } from '../BottomBorderItem';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Tooltip } from '../ui/overlay/Tooltip';
+import { Box } from '../ui/Box';
 
 export const DocumentList: React.FC<{}> = props => {
   const {state} = useApp();
@@ -33,7 +35,7 @@ export const DocumentList: React.FC<{}> = props => {
             title={document.name}
             collapsedDefaultValue={true}
             controls={(
-              <>
+              <Tooltip content="Edit Document">
                 <Link to={`/documents/${document.id}`}>
                   <Button
                     minimal={true}
@@ -43,7 +45,7 @@ export const DocumentList: React.FC<{}> = props => {
                     onClick={() => {}}
                   />
                 </Link>
-              </>
+              </Tooltip>
             )}
           />
         </BottomBorderItem>

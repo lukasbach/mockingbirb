@@ -26,6 +26,7 @@ export interface MockedRouteConfiguration {
 
 export interface RouteEvent {
   route: string;
+  routeId?: string
   handlers: string[];
   requestHeaders: object;
   requestBody: any;

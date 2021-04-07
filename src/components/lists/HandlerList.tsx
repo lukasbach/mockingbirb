@@ -43,20 +43,22 @@ export const HandlerList: React.FC<{}> = props => {
               <LabelText>{handler.name}</LabelText>
             </Box>
             <Box>
-              <Link to={`/handlers/${handler.id}`}>
-                <Button
-                  icon={'pencil-alt'}
-                  ariaDescription={'Edit'}
-                  minimal={true}
-                  embedded={true}
-                />
-              </Link>
+              <Tooltip content="Edit Handler">
+                <Link to={`/handlers/${handler.id}`}>
+                  <Button
+                    icon={'pencil-alt'}
+                    ariaDescription={'Edit'}
+                    minimal={true}
+                    embedded={true}
+                  />
+                </Link>
+              </Tooltip>
               <Button
                 icon={expandedHandler === handler.id ? 'chevron-up' : 'chevron-down'}
                 ariaDescription={expandedHandler === handler.id ? 'Collapse' : 'Expand'}
                 minimal={true}
                 embedded={true}
-                borderRadius={id === Object.keys(handlers).length - 1 ? 'br' : undefined}
+                borderRadius={id === Object.keys(handlers).length - 1 && expandedHandler !== handler.id ? 'br' : undefined}
                 onClick={() => {
                   if (expandedHandler === handler.id) {
                     setExpandedHandler(undefined);
@@ -90,7 +92,10 @@ export const HandlerList: React.FC<{}> = props => {
                 {expandedHandlerRoutes.map((route, routeIdx) => (
                   <Link to={`/route/${route.id}`}>
                     <BottomBorderItem hasBorder={routeIdx !== expandedHandlerRoutes.length - 1}>
-                      <Button fill={true} minimal={true} embedded={true}>
+                      <Button
+                        fill={true} minimal={true} embedded={true}
+                        borderRadius={routeIdx === expandedHandlerRoutes.length - 1 && id === handlers.length - 1 ? 'bl br' : undefined}
+                      >
                         <MethodTag method={route.method} /> {route.route}
                       </Button>
                     </BottomBorderItem>

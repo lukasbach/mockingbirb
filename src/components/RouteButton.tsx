@@ -7,6 +7,8 @@ import { MockedRouteConfiguration } from '../data/types';
 import { useApp } from './AppRoot';
 import { useMemo } from 'react';
 import ago from 's-ago';
+import { Box } from './ui/Box';
+import { useTheme } from './ui/layout/ThemeProvider';
 
 export const RouteButton: React.FC<{
   route: MockedRouteConfiguration,
@@ -14,6 +16,7 @@ export const RouteButton: React.FC<{
   selected?: boolean
 }> = ({ route, selected, onClick }) => {
   const { state, server } = useApp();
+  const theme = useTheme();
 
   const [subtitle, counter] = useMemo(() => {
     const events = state.events.filter(e => e.route === route.route);
@@ -25,7 +28,11 @@ export const RouteButton: React.FC<{
   return (
     <MenuListItem
       rightContent={<Tag background="background3">{counter}</Tag>}
-      subtitle={subtitle}
+      subtitle={(
+        route.handlers.length === 0 ? (
+          <Box as="span" color={theme.colors.red}>No handlers configured</Box>
+        ) : subtitle
+      )}
       key={route.id}
       selected={selected}
       onClick={onClick}

@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const MenuListItem: React.FC<{
   rightContent?: JSX.Element;
-  subtitle?: string;
+  subtitle?: string | JSX.Element;
   selected?: boolean;
   onClick?: () => void;
   icon?: IconProp;

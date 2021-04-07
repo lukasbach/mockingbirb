@@ -15,6 +15,7 @@ import { Padded } from '../ui/Padded';
 import { BottomBorderItem } from '../BottomBorderItem';
 import { ResponseStatus } from '../ui/ResponseStatus';
 import { Link } from 'react-router-dom';
+import { getBorderRadiiList } from '../ui/borderRadiusShorthand';
 
 const HeaderCard: React.FC<{
   headers: object,
@@ -102,10 +103,14 @@ export const EventDetails: React.FC<{
         </label>
 
         <label>
-          <LabelText>Route</LabelText>
-          <InputGroup>
-            <TextInput value={event.route} readOnly={true} />
-          </InputGroup>
+          <LabelText>Matched Route</LabelText>
+          <Box backgroundColor={theme.colors.background3}>
+            <Link to={event.routeId ? `/route/${event.routeId}` : '#'}>
+              <Button minimal={true} embedded={true} fill={true}>
+                <MethodTag method={event.requestMethod} /> {event.route}
+              </Button>
+            </Link>
+          </Box>
         </label>
 
         <label>
@@ -193,11 +198,30 @@ export const EventDetails: React.FC<{
       <Heading level={3}>Handlers</Heading>
       <Box as="p">The following handlers acted on this request.</Box>
       <Card>
-        {event.handlers.map((handlerId, idx) => (
-          <BottomBorderItem hasBorder={idx !== event.handlers.length - 1} key={handlerId}>
-            <Padded>{state.handlers[handlerId].name}</Padded>
-          </BottomBorderItem>
-        ))}
+        {event.handlers.map((handlerId, idx) => {
+          let item = (
+            <BottomBorderItem hasBorder={idx !== event.handlers.length - 1} key={handlerId}>
+              <Button
+                embedded={true}
+                minimal={true}
+                fill={true}
+                borderRadius={getBorderRadiiList(event.handlers.length, idx, true, true)}
+              >
+                {state.handlers[handlerId]?.name ?? 'Deleted Handler'}
+              </Button>
+            </BottomBorderItem>
+          );
+
+          if (handlerId in state.handlers) {
+            item = (
+              <Link to={`/handlers/${handlerId}`}>
+                {item}
+              </Link>
+            );
+          }
+
+          return item;
+        })}
       </Card>
     </Box>
   );

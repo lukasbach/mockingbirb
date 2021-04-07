@@ -4,6 +4,7 @@ import { RouteEvent } from './types';
 import pathMatch from 'path-match';
 
 export class RequestData {
+  private _routeId?: string;
   private _route?: string;
   private _params?: object;
   private _handlers: string[];
@@ -43,8 +44,9 @@ export class RequestData {
   }
 
   /** @internal */
-  public setMatchedRoute(route: string) {
+  public setMatchedRoute(route: string, routeId: string) {
     this._route = route;
+    this._routeId = routeId;
     this._params = this.pathMatcher(route)(this.req.path);
   }
 
@@ -127,6 +129,7 @@ export class RequestData {
       responseStatus: this._responseStatus!,
       responseDocumentId: this._responseDocumentId,
       route: this._route ?? '__NONE',
+      routeId: this._routeId,
       path: this.req.path
     }
   }

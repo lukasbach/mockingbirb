@@ -30,6 +30,9 @@ export const RepeaterHandlerEditor: React.FC<{
             const documentId = server.documents.createDocument({ name, content: '{}', contentType: 'application/json' });
             server.handlers.updateHandler(handler.id, { documentId } as MockedHandlerDocumentRepeater);
           }}
+          inputGroupProps={{
+            borderRadius: document ? undefined : 'bl br',
+          }}
         />
       </label>
       {document && (

@@ -100,16 +100,17 @@ export const RouteEditor: React.FC<{
       </Popover>
       <ChooseHandlerButton
         label="Add existing Handler"
+        filterHandlers={routeConfig.handlers}
         onChoose={(handlerId) => {
           server.routes.updateRoute(props.routeId, { handlers: [...routeConfig.handlers, handlerId] });
         }}
       />
 
       {routeConfig.handlers.map(handlerId => (
-        <Fragment key={handlerId}>
+        <div key={handlerId}>
           <Heading level={3}>{state.handlers[handlerId].name}</Heading>
           <HandlerCard handlerId={ handlerId } routeId={props.routeId} showEditLink={true}/>
-        </Fragment>
+        </div>
       ))}
 
       <Heading level={1}>Actions</Heading>

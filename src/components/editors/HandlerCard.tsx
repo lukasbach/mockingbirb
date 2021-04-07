@@ -16,13 +16,14 @@ import { Tooltip } from '../ui/overlay/Tooltip';
 import { defaultCodeImplementation, defaultHandlerImplementation } from '../../data/defaultCodeImplementation';
 import { ScriptCodeEditor } from '../ui/ScriptCodeEditor';
 import { useAlert } from '../ui/overlay/useAlert';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 
 function moveItem<T>(array: T[], from: number, to: number) {
   const arrayClone = [...array];
   const f = arrayClone.splice(from, 1)[0];
   arrayClone.splice(to, 0, f);
+  console.log(array, arrayClone)
   return arrayClone;
 }
 
@@ -31,11 +32,14 @@ export const HandlerCard: React.FC<{
   routeId?: string,
   showEditLink?: boolean,
 }> = props => {
+  const history = useHistory();
   const { server, state } = useApp();
   const [alert, alertComponent] = useAlert();
   const route = useMemo(() => props.routeId ? state.routes.find(r => r.id === props.routeId) : undefined, [props.routeId, state]);
   const handler = state.handlers[props.handlerId];
   let indexInRoute = route ? route.handlers.indexOf(props.handlerId) : undefined;
+
+  if (!handler) return null;
 
   return (
     <>
@@ -107,12 +111,12 @@ export const HandlerCard: React.FC<{
                         cancelText: 'Delete Handler',
                         content: 'Do you just want to remove the handler from the Route or do you want to delete it completely? Deleting it will also make it unavailable for other routes.',
                         onOkay: () => {
-                          server.handlers.deleteHandler(handler.id);
-                        },
-                        onCancel: () => {
                           if (route) {
                             server.routes.updateRoute(route.id, { handlers: route.handlers.filter(h => h !== handler.id) });
                           }
+                        },
+                        onCancel: () => {
+                          server.handlers.deleteHandler(handler.id);
                         },
                         closeButton: false,
                         closeOnBackdrop: false,
@@ -124,6 +128,7 @@ export const HandlerCard: React.FC<{
                         cancelText: 'Cancel',
                         content: 'Are you sure you want to delete the Handler? Deleting it will also remove it from all routes.',
                         onOkay: () => {
+                          history.push('/handlers')
                           server.handlers.deleteHandler(handler.id);
                         },
                       });

@@ -8,6 +8,7 @@ import { MenuItem } from '../menu/MenuItem';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Box } from '../Box';
 import { useTheme } from '../layout/ThemeProvider';
+import { BorderRadiusShorthand } from '../borderRadiusShorthand';
 
 export const SearchSelect: React.FC<{
   onCreate?: (value: string) => void;
@@ -22,6 +23,9 @@ export const SearchSelect: React.FC<{
   const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState<string>();
 
+  const displayOptions = props.options
+    .filter(option => !searchValue || option.title.toLowerCase().includes(searchValue.toLowerCase() ));
+
   return (
     <Popover
       positions={['bottom', 'top']}
@@ -31,21 +35,28 @@ export const SearchSelect: React.FC<{
       onClickOutside={() => setOpen(false)}
       content={
         <Menu>
-          {props.options
-            .filter(option => !searchValue || option.title.toLowerCase().includes(searchValue.toLowerCase() ))
-            .map(option => (
-              <MenuItem
-                key={option.value}
-                text={option.title}
-                icon={option.icon}
-                onClick={() => {
-                  setSearchValue(undefined);
-                  props.onChange(option.value);
-                  setOpen(false);
-                }}
-              />
-            ))
-          }
+          {displayOptions.map(option => (
+            <MenuItem
+              key={option.value}
+              text={option.title}
+              icon={option.icon}
+              onClick={() => {
+                setSearchValue(undefined);
+                props.onChange(option.value);
+                setOpen(false);
+              }}
+            />
+          ))}
+
+          {displayOptions.length === 0 && (
+            props.onCreate ? (
+              searchValue?.length === 0 ? (
+                <MenuItem text="Start typing to add a new option..." />
+              ) : null
+            ) : (
+              <MenuItem text="No options available" />
+            )
+          )}
 
           {!!searchValue?.length && !!props.onCreate && (
             <MenuItem

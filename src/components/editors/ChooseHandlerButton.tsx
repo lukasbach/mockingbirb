@@ -5,20 +5,21 @@ import { useMemo, useState } from 'react';
 import { Card } from '../ui/Card';
 import { SearchSelect } from '../ui/form/SearchSelect';
 import { useApp } from '../AppRoot';
-import { InputGroup } from '../ui/form/InputGroup';
 import { Box } from '../ui/Box';
 
 export const ChooseHandlerButton: React.FC<{
   label: string;
   onChoose: (handlerId: string) => void;
+  filterHandlers?: string[];
 }> = props => {
   const [open, setOpen] = useState(false);
   const {state} = useApp();
   const [handlerId, setHandlerId] = useState<string>();
   const options = useMemo(() => {
     return Object.values(state.handlers)
+      .filter(handler => !(props.filterHandlers ?? []).includes(handler.id))
       .map(handler => ({ title: handler.name, value: handler.id }));
-  }, [state]);
+  }, [state, props.filterHandlers?.length]);
 
   return (
     <>
@@ -33,7 +34,6 @@ export const ChooseHandlerButton: React.FC<{
           <SearchSelect
             options={options}
             onChange={id => {
-              console.log(id)
               setHandlerId(id);
             }}
             value={handlerId}
@@ -50,7 +50,10 @@ export const ChooseHandlerButton: React.FC<{
           handler.
         </Box>
       </Alert>
-      <Button onClick={() => setOpen(true)}>{props.label}</Button>
+      <Button onClick={() => {
+        setOpen(true);
+        setHandlerId(undefined);
+      }}>{props.label}</Button>
     </>
   );
 };
