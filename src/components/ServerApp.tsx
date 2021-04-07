@@ -12,6 +12,8 @@ import { EventDetails } from './editors/EventDetails';
 import { DocumentEditor } from './editors/DocumentEditor';
 import { HandlerList } from './lists/HandlerList';
 import { HandlerEditor } from './editors/HandlerEditor';
+import { CenteredNotification } from './ui/CenteredNotification';
+import { Button } from './ui/Button';
 
 export const ServerApp: React.FC<{}> = props => {
   return (
@@ -57,6 +59,17 @@ export const ServerApp: React.FC<{}> = props => {
             path="/handlers/:handlerId"
             exact={true}
             render={({ match }) => <HandlerEditor handlerId={match.params.handlerId} />}
+          />
+          <Route
+            path="/"
+            exact={true}
+            render={() => (
+              <CenteredNotification
+                title="Welcome to Mockingbirb!"
+                icon="hand-peace"
+                content="It looks like you don't have a route open. Choose a route from the left or create a new one!"
+              />
+            )}
           />
         </AppContainer>
       </Switch>
