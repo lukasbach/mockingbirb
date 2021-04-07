@@ -9,6 +9,7 @@ import { LabelText } from '../ui/form/LabelText';
 import { useTheme } from '../ui/layout/ThemeProvider';
 import { remote } from 'electron';
 import { useEffect, useState } from 'react';
+import { AdButton } from './AdButton';
 
 const initialMaximizedState = remote.getCurrentWindow().isMaximized();
 
@@ -50,7 +51,29 @@ export const AppHeader: React.FC<{
         {props.children}
       </Box>
 
-      <Box padding="10px 10px 0 0">
+      <Box padding="10px 10px 0 0" display="flex" alignItems="baseline">
+        <Box marginRight="10px" {...undraggable}>
+          <AdButton
+            icon={'bug'}
+            title="Report an issue"
+            url="https://github.com/lukasbach/mockingbirb/issues"
+          />
+          <AdButton
+            icon={['fab', 'twitter']}
+            title="Tweet about Mockingbirb"
+            url="https://twitter.com/intent/tweet?text=Checkout%20Mockingbirb,%20a%20easy-to-use%20HTTP%20mocking%20client&url=https://github.com/lukasbach/mockingbirb&hashtags=mock,app,server,http"
+          />
+          <AdButton
+            icon={'globe'}
+            title="lukasbach.com"
+            url="https://lukasbach.com"
+          />
+          <AdButton
+            icon={['fab', 'github']}
+            title="GitHub Repository"
+            url="https://github.com/lukasbach/mockingbirb"
+          />
+        </Box>
         <Card>
           <Box display="inline-flex" {...undraggable}>
             <Button
