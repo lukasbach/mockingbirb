@@ -1,5 +1,5 @@
 import { defaultMockServerState, MockServer } from '../data/MockServer';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { MockedRouteConfiguration, MockedServerConfiguration, ServerListItem } from '../data/types';
 import { defaultTheme, ThemeProvider } from './ui/layout/ThemeProvider';
 import { remote, app } from 'electron';
@@ -53,15 +53,9 @@ export const AppRoot: React.FC = ({children}) => {
     serverList, setState, state, createServer, server, selectServer, addServer, removeServer, deleteServer
   } = useMockServers(setView);
 
-  const ThemeProviderComponent: React.FC = ({ children: themeChildren }) => (
-    <ThemeProvider color={settings.primaryColor} dark={settings.dark}>
-      {themeChildren}
-    </ThemeProvider>
-  );
-
   if (!state || !server) {
     return (
-      <ThemeProviderComponent>
+      <ThemeProvider color={settings.primaryColor} dark={settings.dark}>
         <AppStateContext.Provider value={{
           state: defaultMockServerState,
           server: null as any,
@@ -82,12 +76,12 @@ export const AppRoot: React.FC = ({children}) => {
         }}>
           <CreateServerPage />
         </AppStateContext.Provider>
-      </ThemeProviderComponent>
+      </ThemeProvider>
     );
   }
 
   return (
-    <ThemeProviderComponent>
+    <ThemeProvider color={settings.primaryColor} dark={settings.dark}>
       <AppStateContext.Provider value={{
         state,
         server,
@@ -105,7 +99,6 @@ export const AppRoot: React.FC = ({children}) => {
         settings,
         writeSettings,
         getRoute: routeId => {
-          console.log("Found ", routeId)
           return state.routes.find(r => r.id === routeId)!;
         }
       }}>
@@ -114,6 +107,6 @@ export const AppRoot: React.FC = ({children}) => {
         {view === 'settings' && <SettingsPage />}
         {view === 'about' && <AboutPage />}
       </AppStateContext.Provider>
-    </ThemeProviderComponent>
+    </ThemeProvider>
   );
 }

@@ -16,7 +16,7 @@ export const MenuListItem: React.FC<{
   return (
     <Box
       padding="10px 6px"
-      margin="4px"
+      margin="6px 10px"
       borderRadius={theme.radius}
       cursor={props.selected ? 'default' : 'pointer'}
       textAlign="left"
@@ -44,7 +44,12 @@ export const MenuListItem: React.FC<{
           display="flex"
           flexGrow={1}
         >
-          <Box flexGrow={1}>
+          <Box
+            flexGrow={1}
+            whiteSpace="nowrap"
+            overflow="hidden"
+            textOverflow="ellipsis"
+          >
             {props.children}
           </Box>
           {props.rightContent && (
