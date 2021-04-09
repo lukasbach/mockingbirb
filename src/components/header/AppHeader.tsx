@@ -9,6 +9,7 @@ import { useTheme } from '../ui/layout/ThemeProvider';
 import { remote } from 'electron';
 import { useEffect, useState } from 'react';
 import { AdButton } from './AdButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const initialMaximizedState = remote.getCurrentWindow().isMaximized();
 
@@ -108,7 +109,7 @@ export const AppHeader: React.FC<{
         </Box>
 
         {props.campaign && (
-          <Campaign ignore={['mockingbirb']} changeInterval={60} render={campaign => (
+          <Campaign ignore={['mockingbirb']} changeInterval={60} dontRenderIfLoading={true} weighted={true} render={campaign => (
             <Box
               {...undraggable}
               padding="8px 12px"
@@ -134,6 +135,7 @@ export const AppHeader: React.FC<{
             >
               {campaign ? (
                 <>
+                  <FontAwesomeIcon icon="link" style={{ marginRight: '4px' }} />
                   {campaign.product}: {campaign.short}
                 </>
               ) : 'Loading...'}

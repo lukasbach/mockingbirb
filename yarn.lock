@@ -125,19 +125,19 @@
     gud "^1.0.0"
     warning "^4.0.3"
 
-"@lukasbach/campaigns-fetch@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@lukasbach/campaigns-fetch/-/campaigns-fetch-0.0.5.tgz#a7bb2c7752080307c822bcb1bd79c6be227e49fd"
-  integrity sha512-UNoaIJTEz04M/otONTfVgI+ZfocsecJocdcdimEO3OQRAiMbeJ7RWbUfwrKWaGaYQuy5xQnaPk9EXe9wEJ+jSw==
+"@lukasbach/campaigns-fetch@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@lukasbach/campaigns-fetch/-/campaigns-fetch-0.1.0.tgz#ee15636179c7a1a22ec959afb3c0fa55d2be16d9"
+  integrity sha512-V3kN4BD0KDMf22s39gzgCco71uHz6lvYH2tmmIfBWpxcXLnll722kaY2wRm4oD6z9NGWMf0SazDdbeb0X/p94Q==
   dependencies:
     typescript "^4.2.4"
 
-"@lukasbach/campaigns-react@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/@lukasbach/campaigns-react/-/campaigns-react-0.0.5.tgz#d933c6dd83b988f44a16833e9b0cab8db7fd77c8"
-  integrity sha512-N0SKemJT6YS7SZ+Gm3NnLeB9RWlPLPg9JJ+CXxbVvIur69QnaQPTJmWHn5MLu0rzubnHm//nPSVqDKq8PJKZ0w==
+"@lukasbach/campaigns-react@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@lukasbach/campaigns-react/-/campaigns-react-0.1.0.tgz#e5e5115bfe3d3366b916f69d67fec3acef578fe5"
+  integrity sha512-rKHP44PKiDCj/kYBkiahUzLnaNaCn5ZDAONZwBPSP1MuYiLUfPW51AI5nvUQCKqM2TMKxINFNipGuT1F8uMWcw==
   dependencies:
-    "@lukasbach/campaigns-fetch" "^0.0.5"
+    "@lukasbach/campaigns-fetch" "^0.1.0"
 
 "@react-hook/event@^1.2.1", "@react-hook/event@^1.2.3":
   version "1.2.3"

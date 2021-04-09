@@ -32,7 +32,7 @@
     "s-ago": "^2.2.0"
   },
   "devDependencies": {
-    "@lukasbach/campaigns-react": "^0.0.5",
+    "@lukasbach/campaigns-react": "^0.1.0",
     "@blueprintjs/core": "^3.42.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-brands-svg-icons": "^5.15.3",
