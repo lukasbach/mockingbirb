@@ -13,9 +13,13 @@ import { DocumentEditor } from './editors/DocumentEditor';
 import { HandlerList } from './lists/HandlerList';
 import { HandlerEditor } from './editors/HandlerEditor';
 import { CenteredNotification } from './ui/CenteredNotification';
-import { Button } from './ui/Button';
+import { Box } from './ui/Box';
+import { remote } from 'electron';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTheme } from './ui/layout/ThemeProvider';
 
 export const ServerApp: React.FC<{}> = props => {
+  const theme = useTheme();
   return (
     <HashRouter>
       <Switch>
@@ -68,6 +72,24 @@ export const ServerApp: React.FC<{}> = props => {
                 title="Welcome to Mockingbirb!"
                 icon="hand-peace"
                 content="It looks like you don't have a route open. Choose a route from the left or create a new one!"
+                actions={(
+                  <Box
+                    as="a"
+                    cursor="pointer"
+                    color={theme.colors.text}
+                    marginTop="10px"
+                    hover={{
+                      color: theme.colors.primary,
+                      borderBottom: `1px solid ${theme.colors.primary}`
+                    }}
+                    elProps={{
+                      onClick: () => remote.shell.openExternal('https://lukasbach.com')
+                    }}
+                  >
+                    Developed with <FontAwesomeIcon icon="heart" color={theme.colors.primary} />{' '}
+                    & Typescript by Lukas Bach
+                  </Box>
+                )}
               />
             )}
           />

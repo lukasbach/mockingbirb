@@ -15,7 +15,7 @@ import {
   faCross,
   faFileAlt,
   faGlobe,
-  faHandPeace,
+  faHandPeace, faHeart,
   faLink,
   faPencilAlt,
   faPlus, faQuestion,
@@ -33,4 +33,4 @@ import {
 library.add(faCoffee, faPlus, faChevronDown, faChevronUp, faChevronLeft, faChevronRight, faFileAlt,
   faPencilAlt, faCode, faTrash, faTrashAlt, faWindowMinimize, faWindowMaximize, faWindowRestore, faTimes,
   faCog, faHandPeace, faGithub, faGlobe, faStar, faTwitter, faBug, faLink, faSquare, faCheckSquare, faCheck,
-  faQuestionCircle, faQuestion);
+  faQuestionCircle, faQuestion, faHeart);
