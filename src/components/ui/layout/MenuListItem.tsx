@@ -39,6 +39,7 @@ export const MenuListItem: React.FC<{
         display="flex"
         flexDirection="column"
         flexGrow={1}
+        maxWidth="100%"
       >
         <Box
           display="flex"
