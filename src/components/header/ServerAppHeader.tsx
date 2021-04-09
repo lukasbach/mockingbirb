@@ -20,7 +20,7 @@ export const ServerAppHeader: React.FC<{}> = props => {
   };
 
   return (
-    <AppHeader>
+    <AppHeader campaign={true}>
       <Box display="flex" alignItems="baseline">
         <Box>
           <Box

@@ -47,7 +47,27 @@ export const AppRoot: React.FC = ({children}) => {
   } = useMockServers(setView);
 
   if (!state || !server) {
-    return <CreateServerPage />;
+    return (
+
+      <AppStateContext.Provider value={{
+        state: defaultMockServerState,
+        server: null as any,
+        selectServer: (server) => {
+          selectServer(server);
+          setView(undefined);
+        },
+        view,
+        createServer,
+        addServer,
+        deleteServer,
+        removeServer,
+        serverList,
+        openView: setView,
+        getRoute: () => null as any,
+      }}>
+        <CreateServerPage />
+      </AppStateContext.Provider>
+    );
   }
 
   return (

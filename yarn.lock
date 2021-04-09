@@ -125,6 +125,20 @@
     gud "^1.0.0"
     warning "^4.0.3"
 
+"@lukasbach/campaigns-fetch@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@lukasbach/campaigns-fetch/-/campaigns-fetch-0.0.5.tgz#a7bb2c7752080307c822bcb1bd79c6be227e49fd"
+  integrity sha512-UNoaIJTEz04M/otONTfVgI+ZfocsecJocdcdimEO3OQRAiMbeJ7RWbUfwrKWaGaYQuy5xQnaPk9EXe9wEJ+jSw==
+  dependencies:
+    typescript "^4.2.4"
+
+"@lukasbach/campaigns-react@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@lukasbach/campaigns-react/-/campaigns-react-0.0.5.tgz#d933c6dd83b988f44a16833e9b0cab8db7fd77c8"
+  integrity sha512-N0SKemJT6YS7SZ+Gm3NnLeB9RWlPLPg9JJ+CXxbVvIur69QnaQPTJmWHn5MLu0rzubnHm//nPSVqDKq8PJKZ0w==
+  dependencies:
+    "@lukasbach/campaigns-fetch" "^0.0.5"
+
 "@react-hook/event@^1.2.1", "@react-hook/event@^1.2.3":
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/@react-hook/event/-/event-1.2.3.tgz#cfe86d5cf36f53e85b367ff619990d001b5c82ae"
@@ -5928,6 +5942,11 @@ typescript@^4.2.3:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.3.tgz#39062d8019912d43726298f09493d598048c1ce3"
   integrity sha512-qOcYwxaByStAWrBf4x0fibwZvMRG+r4cQoTjbPtUlrWjBHbmCAww1i448U0GJ+3cNNEtebDteo/cHOR3xJ4wEw==
+
+typescript@^4.2.4:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.4.tgz#8610b59747de028fda898a8aef0e103f156d0961"
+  integrity sha512-V+evlYHZnQkaz8TRBuxTA92yZBPotr5H+WhQ7bD3hZUndx5tGOa1fuCgeSjxAzM1RiN5IzvadIXTVefuuwZCRg==
 
 undefsafe@^2.0.2:
   version "2.0.3"

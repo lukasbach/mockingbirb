@@ -12,7 +12,7 @@ export const SettingsPage: React.FC<{}> = props => {
       )}
       left={<ServerList />}
     >
-      asd
+      Settings coming soon
     </AppContainer>
   );
 };
