@@ -45,7 +45,20 @@ export const ServerList: React.FC<{}> = props => {
           </ServerIconButton>
         </Tooltip>
       </Box>
-      <Box>
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
+        <Tooltip content="About Mockingbirb" positions={['right']}>
+          <ServerIconButton
+            color={theme.colors.background}
+            active={view === 'about'}
+            onClick={() => openView('about')}
+          >
+            <FontAwesomeIcon icon="question-circle" />
+          </ServerIconButton>
+        </Tooltip>
         <Tooltip content="Settings" positions={['right']}>
           <ServerIconButton
             color={theme.colors.background}

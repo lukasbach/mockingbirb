@@ -10,6 +10,7 @@ import { CreateServerPage } from './pages/createServer/CreateServerPage';
 import { SettingsPage } from './pages/settings/SettingsPage';
 import { NewServerConfig } from './pages/createServer/NewServerConfig';
 import { defaultSettings, Settings, useSettingsProvider } from './useSettingsProvider';
+import { AboutPage } from './pages/about/AboutPage';
 
 export interface AppState {
   state: MockedServerConfiguration;
@@ -27,7 +28,7 @@ export interface AppState {
   writeSettings: (settings: Partial<Settings>) => void;
 }
 
-export type View = 'settings' | 'createServer';
+export type View = 'settings' | 'createServer' | 'about';
 
 export const AppStateContext = React.createContext<AppState>({
   server: null as any,
@@ -111,6 +112,7 @@ export const AppRoot: React.FC = ({children}) => {
         {view === undefined && <ServerApp key={state.id} />}
         {view === 'createServer' && <CreateServerPage />}
         {view === 'settings' && <SettingsPage />}
+        {view === 'about' && <AboutPage />}
       </AppStateContext.Provider>
     </ThemeProviderComponent>
   );
