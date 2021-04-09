@@ -15,7 +15,7 @@ export type ButtonProps = {
   fill?: boolean;
   borderRadius?: BorderRadiusShorthand;
   disabled?: boolean;
-  alignLeft?: boolean;
+  alignCenter?: boolean;
 } & HTMLProps<HTMLButtonElement>;
 
 export const Button: React.FC<ButtonProps> = props => {
@@ -34,7 +34,7 @@ export const Button: React.FC<ButtonProps> = props => {
       height={props.embedded ? '100%' : undefined}
       cursor={props.disabled ? 'not-allowed' : 'pointer'}
       display={props.fill ? 'flex' : 'inline-flex'}
-      justifyContent={props.alignLeft ? 'left' : 'center'}
+      justifyContent={props.alignCenter ? 'center' : 'left'}
       alignItems="center"
       flexDirection="row"
       position="relative"

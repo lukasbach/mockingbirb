@@ -29,7 +29,6 @@ const AdButton: React.FC<{
       fill={true}
       onClick={() => remote.shell.openExternal(props.href)}
       icon={props.icon}
-      alignLeft={true}
     >
       {props.children}
     </Button>
@@ -65,7 +64,7 @@ export const AboutPage: React.FC<{}> = props => {
         </Box>
 
         <Box display="flex">
-          <Box width="200px" backgroundColor={theme.colors.background3} borderBottomLeftRadius={theme.radius}>
+          <Box width="200px" backgroundColor={theme.colors.background3}>
             <Padded>
               Developed by
             </Padded>
@@ -85,6 +84,43 @@ export const AboutPage: React.FC<{}> = props => {
               >
                 lukasbach.com
               </Box>)
+            </Padded>
+          </Box>
+        </Box>
+
+        <Box display="flex">
+          <Box width="200px" backgroundColor={theme.colors.background3} borderBottomLeftRadius={theme.radius}>
+            <Padded>
+              Icons
+            </Padded>
+          </Box>
+          <Box flexGrow={1}>
+            <Padded>
+              Provided by{' '}
+              <Box
+              as="a"
+              cursor="pointer"
+              color={theme.colors.primary}
+              textDecoration="underline"
+              hover={{ color: theme.colors.text }}
+              elProps={{
+                onClick: () => remote.shell.openExternal('https://fontawesome.com/')
+              }}
+            >
+              Font Awesome
+            </Box>{' '}
+            (<Box
+              as="a"
+              cursor="pointer"
+              color={theme.colors.primary}
+              textDecoration="underline"
+              hover={{ color: theme.colors.text }}
+              elProps={{
+                onClick: () => remote.shell.openExternal('https://fontawesome.com/license')
+              }}
+            >
+              Creative Commons Attribution 4.0 International license
+            </Box>)
             </Padded>
           </Box>
         </Box>
