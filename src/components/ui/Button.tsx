@@ -6,7 +6,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BorderRadiusShorthand, getBorderRadii } from './borderRadiusShorthand';
 
-export const Button: React.FC<{
+export type ButtonProps = {
   primary?: boolean;
   minimal?: boolean;
   icon?: IconProp;
@@ -15,7 +15,9 @@ export const Button: React.FC<{
   fill?: boolean;
   borderRadius?: BorderRadiusShorthand;
   disabled?: boolean;
-} & HTMLProps<HTMLButtonElement>> = props => {
+} & HTMLProps<HTMLButtonElement>;
+
+export const Button: React.FC<ButtonProps> = props => {
   const theme = useTheme();
 
   const {ariaDescription, minimal, embedded, fill, borderRadius, primary, ...elProps} = props;
@@ -32,6 +34,7 @@ export const Button: React.FC<{
       cursor={props.disabled ? 'not-allowed' : 'pointer'}
       display={props.fill ? 'flex' : 'inline-flex'}
       alignItems="center"
+      justifyContent="center"
       flexDirection="row"
       position="relative"
       zIndex={100}

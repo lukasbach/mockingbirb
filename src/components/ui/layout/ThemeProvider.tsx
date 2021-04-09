@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import Helmet from 'react-helmet';
 
 export const defaultTheme = {
   colors: {
@@ -37,6 +37,20 @@ export const defaultTheme = {
   keyboardMode: false,
 };
 
+export const defaultThemeBright: Theme = {
+  ...defaultTheme,
+  colors: {
+    ...defaultTheme.colors,
+    background: '#ffffff',
+    background2: '#EBF1F5',
+    background3: '#CED9E0',
+    backgroundMenu: '#8A9BA8',
+    text: '#182026',
+    muted: '#293742',
+    minimalBackground: 'rgba(0, 0, 0, .07)',
+  }
+}
+
 export type Theme = typeof defaultTheme;
 export type ColorName = keyof Theme['colors'];
 
@@ -44,8 +58,13 @@ const ThemeContext = React.createContext<Theme>(defaultTheme);
 
 export const useTheme = () => React.useContext(ThemeContext);
 
-export const ThemeProvider: React.FC = ({ children }) => {
+export const ThemeProvider: React.FC<{
+  dark?: boolean;
+  color?: string;
+}> = ({ children, dark, color }) => {
   const [keyboardMode, setKeyboardMode] = useState(false);
+  const darkTheme = dark ?? true;
+  const theme = darkTheme ? defaultTheme : defaultThemeBright;
 
   useEffect(() => {
     const keydownListener = () => setKeyboardMode(true);
@@ -60,7 +79,21 @@ export const ThemeProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <ThemeContext.Provider value={{...defaultTheme, keyboardMode}}>
+    <ThemeContext.Provider value={{
+      ...theme,
+      colors: {
+        ...theme.colors,
+        primary: color ?? theme.colors.primary,
+      },
+      keyboardMode
+    }}>
+      <Helmet>
+        <style>{`
+          #root, .react-tiny-popover-container, #birb-overlay {
+            color: ${theme.colors.text};
+          }
+        `}</style>
+      </Helmet>
       { children }
     </ThemeContext.Provider>
   );
@@ -72,4 +105,3 @@ export const ThemeProvider: React.FC = ({ children }) => {
     background3: '#121213',
     backgroundMenu: '#404045',
  */
-
