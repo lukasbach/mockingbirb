@@ -9,6 +9,7 @@ import { Serializer } from '../data/serialization/Serializer';
 import { NewServerConfig } from './pages/createServer/NewServerConfig';
 import * as uuid from 'uuid';
 import { View } from './AppRoot';
+import { trackEvent } from '../analytics';
 
 const appDataPath = path.join(remote.app.getPath('appData'), 'mockingbirb');
 const serversFile = path.join(appDataPath, 'birbfile');
@@ -30,6 +31,7 @@ export const useMockServers = (setView: (view?: View) => void) => {
     setState(server.getState());
     server.setUpdateHandler(setState);
     setView(undefined);
+    trackEvent('app_select_server');
   };
 
   const createServer = async (config: NewServerConfig) => {
@@ -38,6 +40,7 @@ export const useMockServers = (setView: (view?: View) => void) => {
     await updateServersFile([...(serverList ?? []).map(server => server.location), config.location]);
     await reloadServers();
     selectServer(id);
+    trackEvent('app_create_server');
   };
 
   const addServer = async (location: string) => {
@@ -54,6 +57,7 @@ export const useMockServers = (setView: (view?: View) => void) => {
         })
       }
     });
+    trackEvent('app_add_server');
   };
 
   const removeServer = async (id: string) => {
@@ -64,6 +68,7 @@ export const useMockServers = (setView: (view?: View) => void) => {
         selectServer(serverList[0].id);
       }
     });
+    trackEvent('app_remove_server');
   };
 
   const deleteServer = async (id: string) => {
@@ -73,6 +78,7 @@ export const useMockServers = (setView: (view?: View) => void) => {
       await removeServer(id);
       await fs.remove(server.location);
     }
+    trackEvent('app_delete_server');
   };
 
   const reloadServers = async () => {

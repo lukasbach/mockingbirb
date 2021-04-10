@@ -20,6 +20,7 @@ import { useAlert } from '../ui/overlay/useAlert';
 import { Fragment } from 'react';
 import { ChooseHandlerButton } from './ChooseHandlerButton';
 import { Redirect } from 'react-router-dom';
+import { useScreenView } from '../../analytics';
 
 export const RouteEditor: React.FC<{
   routeId: string
@@ -27,6 +28,7 @@ export const RouteEditor: React.FC<{
   const [openAlert, alert] = useAlert();
   const { getRoute, server, state } = useApp();
   const routeConfig = getRoute(props.routeId);
+  useScreenView('route_editor');
 
   if (!routeConfig) {
     return (

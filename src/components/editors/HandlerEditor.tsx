@@ -8,10 +8,12 @@ import { Link, Redirect } from 'react-router-dom';
 import { Button } from '../ui/Button';
 import { MethodTag } from '../ui/MethodTag';
 import { Card } from '../ui/Card';
+import { useScreenView } from '../../analytics';
 
 export const HandlerEditor: React.FC<{
   handlerId: string;
 }> = props => {
+  useScreenView('handler_editor');
   const {state} = useApp();
   const handler = state.handlers[props.handlerId];
 

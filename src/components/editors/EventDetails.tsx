@@ -16,11 +16,13 @@ import { BottomBorderItem } from '../BottomBorderItem';
 import { ResponseStatus } from '../ui/ResponseStatus';
 import { Link } from 'react-router-dom';
 import { getBorderRadiiList } from '../ui/borderRadiusShorthand';
+import { useScreenView } from '../../analytics';
 
 const HeaderCard: React.FC<{
   headers: object,
   headerCount: number
 }> = ({ headers, headerCount }) => {
+  useScreenView('event_details');
   const theme = useTheme();
   return (
     <Card>

@@ -2,6 +2,7 @@ import { MockedServerConfiguration } from './types';
 import { MockServer } from './MockServer';
 import vm from 'vm';
 import { RequestData } from './RequestData';
+import { trackEvent } from '../analytics';
 
 export class CodeVm {
   constructor(
@@ -11,6 +12,7 @@ export class CodeVm {
   }
 
   public async execute(code: string, request: RequestData, context?: any): Promise<any> {
+    trackEvent('vm_execute');
     return new Promise<any>((res, rej) => {
       const codeWithoutImports = code.replace(/(import[^'"]+['"][^'"]+['"];?)/g, '');
 

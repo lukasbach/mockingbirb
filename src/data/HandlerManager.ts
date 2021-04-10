@@ -7,6 +7,7 @@ import {
 import { MockServer } from './MockServer';
 import * as uuid from 'uuid';
 import { defaultCodeImplementation } from './defaultCodeImplementation';
+import { trackEvent } from '../analytics';
 
 export class HandlerManager {
   constructor(
@@ -19,6 +20,7 @@ export class HandlerManager {
     const id = uuid.v4();
     this.state.handlers[id] = {...handler, id};
     this.server.scheduleUpdate();
+    trackEvent('handlers_create');
     return id;
   }
   public updateHandler(id: string, handler: Partial<MockedHandler>) {
@@ -27,6 +29,7 @@ export class HandlerManager {
     }
     this.state.handlers[handler.id ?? id] = {...this.state.handlers[id], ...handler};
     this.server.scheduleUpdate();
+    trackEvent('handlers_update');
   }
   public deleteHandler(id: string) {
     delete this.state.handlers[id];
@@ -36,6 +39,7 @@ export class HandlerManager {
       }
     }
     this.server.scheduleUpdate();
+    trackEvent('handlers_delete');
   }
   public initializeNewHandlerFor(routeId: string | undefined, handlerType: string) {
     let handlerId;
@@ -75,5 +79,6 @@ export class HandlerManager {
         handlers: [...routeConfig.handlers, handlerId]
       });
     }
+    trackEvent('handlers_init');
   }
 }

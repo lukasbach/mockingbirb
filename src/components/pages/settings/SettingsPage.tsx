@@ -8,6 +8,8 @@ import { Checkbox } from '../../ui/form/Checkbox';
 import { useApp } from '../../AppRoot';
 import { useTheme } from '../../ui/layout/ThemeProvider';
 import { LabelText } from '../../ui/form/LabelText';
+import { useEffect } from 'react';
+import { setUseTelemetry, trackEvent, useScreenView } from '../../../analytics';
 
 const colors = [
   '#DB8137',
@@ -20,7 +22,12 @@ const colors = [
 
 export const SettingsPage: React.FC<{}> = props => {
   const { settings, writeSettings } = useApp();
+  useScreenView('settings');
   const theme = useTheme();
+
+  useEffect(() => {
+    setUseTelemetry(settings.telemetry);
+  }, [settings.telemetry]);
 
   return (
     <AppContainer
@@ -52,6 +59,7 @@ export const SettingsPage: React.FC<{}> = props => {
               marginRight="10px"
               elProps={{
                 onClick: () => {
+                  trackEvent('settings_update_color');
                   writeSettings({ primaryColor: color });
                 }
               }}
@@ -67,7 +75,10 @@ export const SettingsPage: React.FC<{}> = props => {
             <Checkbox
               value={settings.dark}
               borderRadius="tl"
-              onChangeValue={(dark) => writeSettings({ dark })}
+              onChangeValue={(dark) => {
+                trackEvent('settings_update_dark');
+                writeSettings({ dark })
+              }}
             />
             <Box flexGrow={1} marginLeft="10px">Dark UI</Box>
           </Box>

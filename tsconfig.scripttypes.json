@@ -11,7 +11,8 @@
     "emitDeclarationOnly": true,
     "strict": true,
     "skipLibCheck": true,
-    "allowJs": true
+    "allowJs": true,
+    "stripInternal": true
   },
   "include": [
     "src/data/contextTypes"

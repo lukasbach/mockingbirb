@@ -10,10 +10,12 @@ import { Button } from '../ui/Button';
 import { remote } from 'electron';
 import { useAlert } from '../ui/overlay/useAlert';
 import { BottomBorderItem } from '../BottomBorderItem';
+import { useScreenView } from '../../analytics';
 
 export const ServerSettings: React.FC<{}> = props => {
   const { state, server, deleteServer, removeServer } = useApp();
   const [openAlert, alert] = useAlert();
+  useScreenView('server_settings');
 
   return (
     <>

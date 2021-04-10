@@ -13,10 +13,12 @@ import { Button } from '../ui/Button';
 import { Tooltip } from '../ui/overlay/Tooltip';
 import { useAlert } from '../ui/overlay/useAlert';
 import { Redirect } from 'react-router-dom';
+import { useScreenView } from '../../analytics';
 
 export const DocumentEditor: React.FC<{
   documentId: string;
 }> = props => {
+  useScreenView('document_editor');
   const {state, server} = useApp();
   const [openAlert, alert] = useAlert();
   const document = state.documents[props.documentId];

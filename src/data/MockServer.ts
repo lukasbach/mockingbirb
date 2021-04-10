@@ -13,6 +13,7 @@ import { CodeVm } from './CodeVm';
 import { Serializer } from './serialization/Serializer';
 import { Server } from 'http';
 import { HandlerManager } from './HandlerManager';
+import { trackEvent } from '../analytics';
 
 export const defaultMockServerState: MockedServerConfiguration = {
   id: uuid.v4(),
@@ -107,7 +108,8 @@ export class MockServer {
   }
 
   public start() {
-    console.log("Starting server")
+    console.log("Starting server");
+    trackEvent('mockserver_start');
     if (this.httpServer) {
       this.stop();
     }
@@ -139,12 +141,14 @@ export class MockServer {
 
     window.addEventListener("beforeunload", () => {
       console.log("Closing server");
+      trackEvent('mockserver_stop_unload');
       this.stop();
     })
   }
 
   public stop() {
     if (this.httpServer) {
+      trackEvent('mockserver_stop');
       this.httpServer.close();
       this.state.isRunning = false;
       this.scheduleUpdate();
@@ -154,10 +158,12 @@ export class MockServer {
   public recordEvent(event: RouteEvent) {
     this.state.events.push(event);
     this.scheduleUpdate();
+    trackEvent('mockserver_record_event');
   }
   public clearEvents() {
     this.state.events = [];
     this.scheduleUpdate();
+    trackEvent('mockserver_clear_events');
   }
 
   public scheduleUpdate() {

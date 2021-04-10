@@ -15,14 +15,43 @@ import { useApp } from '../../AppRoot';
 import { LocalPathInput } from '../../ui/form/LocalPathInput';
 import { Card } from '../../ui/Card';
 import { Box } from '../../ui/Box';
+import { useTheme } from '../../ui/layout/ThemeProvider';
+import { useScreenView } from '../../../analytics';
 
 const defaultLocation = path.join(remote.app.getPath('desktop'), 'New Birb');
+
+const PrivacyNotice: React.FC = () => {
+  const theme = useTheme();
+  return (
+    <Box margin="8px 0" color={theme.colors.muted}>
+      By using Mockingbirb, you accept{' '}
+      <Box
+        as="a"
+        cursor="pointer"
+        color={theme.colors.text}
+        marginTop="10px"
+        borderBottom={`1px solid ${theme.colors.text}`}
+        hover={{
+          color: theme.colors.primary,
+          borderBottom: `3px solid ${theme.colors.primary}`
+        }}
+        elProps={{
+          onClick: () => remote.shell.openExternal('https://github.com/lukasbach/mockingbirb/blob/master/privacy.md')
+        }}
+      >
+        Mockingbirb's privacy policy
+      </Box>.
+      No personally identifiable data or mock configurations will be sent to external servers.
+    </Box>
+  )
+}
 
 const isFolderEmpty = (location: string) => {
   return !fs.existsSync(location) || fs.readdirSync(location).length === 0;
 }
 
 export const CreateServerPage: React.FC<{}> = props => {
+  useScreenView('create_server');
   const { createServer, addServer } = useApp();
   const [openAlert, alert] = useAlert();
   const [addServerLocation, setAddServerLocation] = useState(defaultLocation);
@@ -50,6 +79,7 @@ export const CreateServerPage: React.FC<{}> = props => {
               config={newServerConfig}
               onChange={c => setNewServerConfig(old => ({...old, ...c}))}
             />
+            <PrivacyNotice />
             <Button onClick={async () => {
               if (!isFolderEmpty(newServerConfig.location)) {
                 await openAlert({
@@ -85,6 +115,7 @@ export const CreateServerPage: React.FC<{}> = props => {
                 isTopOfCard={true}
               />
             </Card>
+            <PrivacyNotice />
             <Button onClick={async () => {
               try {
                 await addServer(addServerLocation);

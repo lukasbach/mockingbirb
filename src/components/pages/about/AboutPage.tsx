@@ -14,6 +14,7 @@ import { BottomBorderItem } from '../../BottomBorderItem';
 import { Button } from '../../ui/Button';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Campaign } from '@lukasbach/campaigns-react';
+import { useScreenView } from '../../../analytics';
 
 const AdButton: React.FC<{
   href: string;
@@ -37,6 +38,7 @@ const AdButton: React.FC<{
 
 export const AboutPage: React.FC<{}> = props => {
   const theme = useTheme();
+  useScreenView('about');
 
   return (
     <AppContainer
