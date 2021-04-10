@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
+import './updater';
 
 console.log('process.env.NODE_ENV=', process.env.NODE_ENV);
 
