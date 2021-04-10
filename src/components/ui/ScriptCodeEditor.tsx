@@ -4,17 +4,17 @@ import path from 'path';
 import { remote } from 'electron';
 import fs from 'fs';
 
-const resourcesDir = (
+const scriptTypesDir = (
   process.env.NODE_ENV === 'development'
     ? path.join(path.normalize(remote.app.getAppPath()).split(path.sep).slice(0, -1).join(path.sep), 'resources')
-    : path.join(remote.app.getAppPath(), 'resources')
+    : path.join(remote.app.getAppPath(), 'app')
   // : path.join(path.dirname(remote.process.execPath), 'resources')
 );
 
 let scriptTypes = '';
 
 try {
-  scriptTypes = fs.readFileSync(path.join(resourcesDir, 'scripttypes.d.ts'), { encoding: 'utf8' });
+  scriptTypes = fs.readFileSync(path.join(scriptTypesDir, 'scripttypes.d.ts'), { encoding: 'utf8' });
 } catch(e) {
   console.error('Could not find resources/scripttypes.d.ts. If you are in dev mode, did you run ``yarn prepare:scripttypes``?')
 }
