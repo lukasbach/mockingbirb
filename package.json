@@ -8,7 +8,7 @@
     "start:renderer:dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack-renderer.config.ts --mode development",
     "build:electron-main:dev": "cross-env NODE_ENV=development webpack --config webpack-electron.config.ts --mode development",
     "build:electron-main:prod": "cross-env NODE_ENV=production webpack --config webpack-electron.config.ts --mode production",
-    "build:app": "yarn build:renderer:prod && yarn build:electron-main:prod && cpy resources/scripttypes.d.ts app",
+    "build:app": "yarn prepare:scripttypes && yarn build:renderer:prod && yarn build:electron-main:prod && cpy resources/scripttypes.d.ts app",
     "build:unpacked": "electron-builder --dir",
     "build:packed": "electron-builder",
     "build": "yarn build:app && yarn build:packed",
